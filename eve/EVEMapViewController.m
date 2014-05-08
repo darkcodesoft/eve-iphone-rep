@@ -284,6 +284,19 @@ static NSString *CellID = @"menu-table-cell";
 -( void ) getFeed:( NSString *)feedPath page:(int) pageParam
 {
     self.collection = [self.Utils getCollectionforFeed:[[NSString alloc] initWithFormat:@"%@%i", feedPath, pageParam]];
+    
+    __block EVEMapViewController *sself = self;
+    
+    self.Utils.reach.reachableBlock = ^(Reachability*reach)
+    {
+        [sself getFeed:feedPath page:pageParam];
+        [sself startTrackingUser];
+        [sself setAnnotations];
+        [sself.MapView addAnnotations:sself.annotations];
+        NSLog(@"...REACHABLE!");
+    };
+    
+    [self.Utils.reach startNotifier];
 }
 
 /** **/

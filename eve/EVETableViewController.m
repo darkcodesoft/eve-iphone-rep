@@ -293,17 +293,15 @@ static NSString *CellID = @"list-table-cell";
     }
     else
     {
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Ooops" message:@"Network unavailable" delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
-        
-        dispatch_after(1.0f, dispatch_get_main_queue(), ^(void){
-            [alert show];
-        });
+        [self.Utils netWorkErrorHandler];
     }
 }
 
 /** **/
 -( void ) refreshCollection
 {
+    if( [self.Utils eveIsOnline] )
+    {
     self.collection =[[NSArray alloc] init];
     self.set = 1;
     [self getCollection];
@@ -318,7 +316,11 @@ static NSString *CellID = @"list-table-cell";
         
         [self.tableView setContentOffset:CGPointMake(0, -64) animated:NO];
     });
-
+    }
+    else
+    {
+        [self.Utils netWorkErrorHandler];
+    }
 }
 
 /** **/

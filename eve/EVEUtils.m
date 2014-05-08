@@ -44,23 +44,6 @@
  * @desc get collection from server
  * @method setCollection
  **/
-//-( NSArray *) getCollectionforFeed:(NSString *)feedPath
-//{
-//    NSArray *collection = [NSArray new];
-//    
-//    if( [self eveIsOnline] ) collection = [self getCollection:feedPath];
-//    else
-//    {
-//        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Ooops" message:@"Network unavailable" delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
-//        
-//        dispatch_after(1.0f, dispatch_get_main_queue(), ^(void){
-//            [alert show];
-//        });
-//    }
-//    
-//    return collection;
-//}
-
 -( NSArray *) getCollectionforFeed:(NSString *)feedPath
 {
     //NSLog(@"%@", self.server);
@@ -320,18 +303,41 @@
 //    
 //    // Start the notifier, which will cause the reachability object to retain itself!
 //    [reach startNotifier];
+    
+    self.reach = [Reachability reachabilityWithHostname:@"http://tp-eve.aws.af.cm"];
 }
 
 - (BOOL) eveIsOnline
 {
-    NSURL *url = [NSURL URLWithString:@"http://www.google.com"];
+    BOOL *res = NO;
+    NSURL *url = [NSURL URLWithString:@"http://tp-eve.aws.af.cm"];
     NSURLRequest *request = [NSMutableURLRequest requestWithURL:url];
     NSHTTPURLResponse *response = nil;
     [NSURLConnection sendSynchronousRequest:request
                           returningResponse:&response error:NULL];
     
-    NSLog(@"%@", response);
-    return (response != nil);
+    if( response )
+    {
+        res = (BOOL *)YES;
+//        [self.reach stopNotifier];
+    }
+    else
+    {
+        [self.reach startNotifier];
+    }
+    
+    //NSLog(@"%@", response);
+    //return (response != nil);
+    return (res != nil);
+}
+
+-( void ) netWorkErrorHandler
+{
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Ooops... " message:@"Network unvailable. Check and try again later." delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
+    
+    dispatch_after(1.0f, dispatch_get_main_queue(), ^(void){
+        [alert show];
+    });
 }
 
 /**

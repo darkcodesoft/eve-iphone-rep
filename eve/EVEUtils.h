@@ -10,6 +10,7 @@
 #import <CoreLocation/CoreLocation.h>
 #import <MapKit/MapKit.h>
 #import <AddressBook/AddressBook.h>
+#import "Reachability.h"
 
 @interface EVEUtils : NSObject
 
@@ -18,6 +19,7 @@
 @property (nonatomic, strong) NSUserDefaults *Defaults;
 @property (nonatomic, strong) CLGeocoder *geocoder;
 @property (nonatomic, strong) NSMutableDictionary *theme;
+@property (nonatomic, strong) Reachability *reach;
 @property (nonatomic) BOOL appIsOnline;
 
 -( NSArray *) getCollectionforFeed:(NSString *) feedPath;
@@ -29,6 +31,8 @@
 -( void ) initSearch;
 
 -( void ) locateUser;
+
+-( void ) netWorkErrorHandler;
 
 -( void ) initPostController:( UIViewController *) controller;
 
