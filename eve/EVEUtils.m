@@ -333,7 +333,7 @@
 
 -( void ) netWorkErrorHandler
 {
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Ooops... " message:@"Network unvailable. Check and try again later." delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Ooops... " message:@"Network unvailable. Check your network then try again later." delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
     
     dispatch_after(1.0f, dispatch_get_main_queue(), ^(void){
         [alert show];

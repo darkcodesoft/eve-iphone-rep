@@ -257,9 +257,10 @@ static NSString *CellID = @"list-table-cell";
  **/
 -( void ) getCollection
 {
+    if( self.fetching ) return;
+    self.fetching = YES;
     
     if( [self.Utils eveIsOnline] ){
-    self.fetching = YES;
     
     int64_t delayInSeconds = 1.0f;
     
@@ -300,6 +301,8 @@ static NSString *CellID = @"list-table-cell";
 /** **/
 -( void ) refreshCollection
 {
+    if( self.fetching ) return;
+    
     if( [self.Utils eveIsOnline] )
     {
     self.collection =[[NSArray alloc] init];
