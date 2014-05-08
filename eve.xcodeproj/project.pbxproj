@@ -35,6 +35,7 @@
 		7D6C7D4C18F7853A0030476D /* EVEFilterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D6C7D4A18F7853A0030476D /* EVEFilterViewController.m */; };
 		7D6C7D4D18F7853A0030476D /* EVEFilterViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7D6C7D4B18F7853A0030476D /* EVEFilterViewController.xib */; };
 		7D6C7D5518F856DF0030476D /* EVEFilterUITextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D6C7D5418F856DF0030476D /* EVEFilterUITextField.m */; };
+		7DA1A8E5191B3CCD00F185E8 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 7DA1A8E4191B3CCD00F185E8 /* Reachability.m */; };
 		7DBF40B01900D4550006A154 /* EVEItemViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7DBF40AE1900D4550006A154 /* EVEItemViewController.m */; };
 		7DBF40B11900D4550006A154 /* EVEItemViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7DBF40AF1900D4550006A154 /* EVEItemViewController.xib */; };
 		7DC93CF21908BBC7007FF87B /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7DC93CF11908BBC7007FF87B /* Images.xcassets */; };
@@ -95,6 +96,8 @@
 		7D6C7D4B18F7853A0030476D /* EVEFilterViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EVEFilterViewController.xib; sourceTree = "<group>"; };
 		7D6C7D5318F856DF0030476D /* EVEFilterUITextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EVEFilterUITextField.h; sourceTree = "<group>"; };
 		7D6C7D5418F856DF0030476D /* EVEFilterUITextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EVEFilterUITextField.m; sourceTree = "<group>"; };
+		7DA1A8E3191B3CCD00F185E8 /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
+		7DA1A8E4191B3CCD00F185E8 /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
 		7DBF40AD1900D4550006A154 /* EVEItemViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EVEItemViewController.h; sourceTree = "<group>"; };
 		7DBF40AE1900D4550006A154 /* EVEItemViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EVEItemViewController.m; sourceTree = "<group>"; };
 		7DBF40AF1900D4550006A154 /* EVEItemViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EVEItemViewController.xib; sourceTree = "<group>"; };
@@ -212,6 +215,8 @@
 				7DC93D041908F7FA007FF87B /* EVEShareViewController.xib */,
 				9221BC8819195AFE00F3B169 /* EVEMapSwitch.h */,
 				9221BC8919195AFE00F3B169 /* EVEMapSwitch.m */,
+				7DA1A8E3191B3CCD00F185E8 /* Reachability.h */,
+				7DA1A8E4191B3CCD00F185E8 /* Reachability.m */,
 			);
 			path = eve;
 			sourceTree = "<group>";
@@ -370,6 +375,7 @@
 				7D28A25118EE65A800A8A29B /* main.m in Sources */,
 				9221BC8A19195AFE00F3B169 /* EVEMapSwitch.m in Sources */,
 				7D17DDB518EE781E00D37C50 /* EVETableViewController.m in Sources */,
+				7DA1A8E5191B3CCD00F185E8 /* Reachability.m in Sources */,
 				7DF4BDF718F1EFF500706ACB /* EVEAnnotation.m in Sources */,
 				7DBF40B01900D4550006A154 /* EVEItemViewController.m in Sources */,
 				7D17DDCB18EFE21B00D37C50 /* EVEUtils.m in Sources */,

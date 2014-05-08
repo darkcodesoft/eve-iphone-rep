@@ -18,6 +18,7 @@
 @property (nonatomic, strong) NSUserDefaults *Defaults;
 @property (nonatomic, strong) CLGeocoder *geocoder;
 @property (nonatomic, strong) NSMutableDictionary *theme;
+@property (nonatomic) BOOL appIsOnline;
 
 -( NSArray *) getCollectionforFeed:(NSString *) feedPath;
 
@@ -44,5 +45,7 @@
 -( NSString *) dateToTimestamp:(NSDate *) date;
 
 -( NSDate *) getNextWeekend;
+
+-(BOOL) eveIsOnline;
 
 @end

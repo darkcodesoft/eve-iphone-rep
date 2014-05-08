@@ -8,6 +8,7 @@
 
 #import "EVEUtils.h"
 #import "EVEShareViewController.h"
+#import "Reachability.h"
 
 @interface EVEUtils () <CLLocationManagerDelegate>
 @property (nonatomic, strong) CLLocationManager *locationManager;
@@ -43,13 +44,30 @@
  * @desc get collection from server
  * @method setCollection
  **/
+//-( NSArray *) getCollectionforFeed:(NSString *)feedPath
+//{
+//    NSArray *collection = [NSArray new];
+//    
+//    if( [self eveIsOnline] ) collection = [self getCollection:feedPath];
+//    else
+//    {
+//        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Ooops" message:@"Network unavailable" delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
+//        
+//        dispatch_after(1.0f, dispatch_get_main_queue(), ^(void){
+//            [alert show];
+//        });
+//    }
+//    
+//    return collection;
+//}
+
 -( NSArray *) getCollectionforFeed:(NSString *)feedPath
 {
     //NSLog(@"%@", self.server);
     NSLog(@"%@", feedPath);
     NSArray *collection = [NSArray new];
     NSString *CString = [[NSString alloc] initWithFormat:@"%@%@", self.server, feedPath];
-
+    
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:CString]
                                                            cachePolicy:NSURLRequestReloadIgnoringLocalAndRemoteCacheData
                                                        timeoutInterval:10];
@@ -91,6 +109,7 @@
     NSLog(@"********************");
     
     return collection;
+
 }
 
 /**
@@ -282,6 +301,37 @@
     self.theme = [NSMutableDictionary new];
     [self.theme setValue:[UIColor colorWithRed:0/255.0f green:204/255.0f blue:204/255.0f alpha:1.0f] forKey:@"themeColor"];
     [self.theme setValue:[UIColor whiteColor] forKey:@"menuFontColor"];
+    
+//    
+//    Reachability* reach = [Reachability reachabilityWithHostname:@"www.google.com"];
+//    
+//    // Set the blocks
+//    reach.reachableBlock = ^(Reachability*reach)
+//    {
+//        NSLog(@"REACHABLE!");
+//        _appIsOnline = YES;
+//    };
+//    
+//    reach.unreachableBlock = ^(Reachability*reach)
+//    {
+//        _appIsOnline = NO;
+//        NSLog(@"UNREACHABLE!");
+//    };
+//    
+//    // Start the notifier, which will cause the reachability object to retain itself!
+//    [reach startNotifier];
+}
+
+- (BOOL) eveIsOnline
+{
+    NSURL *url = [NSURL URLWithString:@"http://www.google.com"];
+    NSURLRequest *request = [NSMutableURLRequest requestWithURL:url];
+    NSHTTPURLResponse *response = nil;
+    [NSURLConnection sendSynchronousRequest:request
+                          returningResponse:&response error:NULL];
+    
+    NSLog(@"%@", response);
+    return (response != nil);
 }
 
 /**

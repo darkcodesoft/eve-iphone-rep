@@ -466,12 +466,13 @@ static NSString *CellID = @"city-table-cell";
  **/
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UITableViewCell *cell = (UITableViewCell *)[tableView dequeueReusableCellWithIdentifier:nil];
+    // dynamic fix identifier for fix table
+    UITableViewCell *cell = (UITableViewCell *)[tableView dequeueReusableCellWithIdentifier:[NSString stringWithFormat:@"%@-%i", CellID, [indexPath row]]];
 
     if (cell == nil)
     {
         NSDictionary *model = (NSDictionary *)[self.cities objectAtIndex:indexPath.row];
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellID];
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:[NSString stringWithFormat:@"%@-%i", CellID, [indexPath row]]];
         
         UIView *selectedBackgroundViewForCell = [UIView new];
         [selectedBackgroundViewForCell setBackgroundColor:[UIColor colorWithRed:0 green:0 blue:0 alpha:.05]];

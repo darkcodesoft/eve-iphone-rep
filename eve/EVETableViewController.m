@@ -242,20 +242,14 @@ static NSString *CellID = @"list-table-cell";
     self.results = [self.Utils getCollectionforFeed:[[NSString alloc] initWithFormat:@"%@%i", feedPath, pageParam]];
     NSLog(@"%lu", (unsigned long)[self.results count]);
     
-    if( [self.results count] == 0 )
+    if( [self.results count] > 0 )
     {
-        self.messageSubject.text = @"Oops... No match found.";
-        self.messageBody.text = @"Refine your search, and try again.";
-        [self showMessageView];
-        return;
-    }
-    else{
-        [self hideMessageView];
+        NSArray *copy = [NSArray arrayWithArray:self.collection];
+        self.collection = [copy arrayByAddingObjectsFromArray:self.results];
+        self.fetching = NO;
     }
     
-    NSArray *copy = [NSArray arrayWithArray:self.collection];
-    self.collection = [copy arrayByAddingObjectsFromArray:self.results];
-    self.fetching = NO;
+    [self hideMessageView];
 }
 
 /**
@@ -263,6 +257,8 @@ static NSString *CellID = @"list-table-cell";
  **/
 -( void ) getCollection
 {
+    
+    if( [self.Utils eveIsOnline] ){
     self.fetching = YES;
     
     int64_t delayInSeconds = 1.0f;
@@ -294,7 +290,15 @@ static NSString *CellID = @"list-table-cell";
         [self.tableView setTableFooterView:nil];
         self.view.backgroundColor = [UIColor colorWithRed:0/255.0f green:204/255.0f blue:204/255.0f alpha:1.0f];
     });
-
+    }
+    else
+    {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Ooops" message:@"Network unavailable" delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
+        
+        dispatch_after(1.0f, dispatch_get_main_queue(), ^(void){
+            [alert show];
+        });
+    }
 }
 
 /** **/
@@ -375,8 +379,6 @@ static NSString *CellID = @"list-table-cell";
 {
     EVECell *cell = (EVECell *)[tableView dequeueReusableCellWithIdentifier:CellID];
     
-    if( cell == nil ) cell = [[EVECell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellID];
-    
     NSDictionary *model = (NSDictionary *)[self.collection objectAtIndex:indexPath.row];
     
     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
@@ -394,15 +396,25 @@ static NSString *CellID = @"list-table-cell";
     [cell.tagsLabel setText:[NSString stringWithFormat:@"%@", tagString]];
     [cell.timeLabel setText:[timeString uppercaseString]];
     
-    CLLocationCoordinate2D location = CLLocationCoordinate2DMake([[model objectForKey:@"latitude"] floatValue], [[model objectForKey:@"longitude"] floatValue]);
-    MKPlacemark *destinationMark = [[MKPlacemark alloc] initWithCoordinate:location addressDictionary:nil];
-    MKMapItem *destinationItem = [[MKMapItem alloc] initWithPlacemark:destinationMark];
     
-    if([cell.distanceLabel.text isEqualToString:@"Loading..."] == YES || [cell.distanceLabel.text isEqualToString:@"0.0 Miles"] == YES)
-    {
-        [self findDistanceFrom:[MKMapItem mapItemForCurrentLocation] to:destinationItem forLabel:cell.distanceLabel];
-    }
     
+//    if([cell.distanceLabel.text isEqualToString:@"Loading..."] == YES || [cell.distanceLabel.text isEqualToString:@"0.0 Miles"] == YES)
+//    {
+//        [self findDistanceFrom:[MKMapItem mapItemForCurrentLocation] to:destinationItem forLabel:cell.distanceLabel];
+//    }
+    
+//    UILabel *distanceLabel = (UILabel *)[cell viewWithTag:[indexPath row]+1];
+//    
+//    if( distanceLabel == nil )
+//    {
+//        CLLocationCoordinate2D location = CLLocationCoordinate2DMake([[model objectForKey:@"latitude"] floatValue], [[model objectForKey:@"longitude"] floatValue]);
+//        MKPlacemark *destinationMark = [[MKPlacemark alloc] initWithCoordinate:location addressDictionary:nil];
+//        MKMapItem *destinationItem = [[MKMapItem alloc] initWithPlacemark:destinationMark];
+//        
+//        [self findDistanceFrom:[MKMapItem mapItemForCurrentLocation] to:destinationItem forLabel:cell.distanceLabel];
+//        [cell.distanceLabel setTag:[indexPath row]+1];
+//    }
+//    
     return cell;
 }
 

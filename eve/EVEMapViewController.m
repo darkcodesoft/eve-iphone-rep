@@ -539,13 +539,14 @@ static NSString *CellID = @"menu-table-cell";
 /** **/
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UITableViewCell *cell = (UITableViewCell *)[tableView dequeueReusableCellWithIdentifier:nil];
+    // dynamic fix identifier for fix table
+    UITableViewCell *cell = (UITableViewCell *)[tableView dequeueReusableCellWithIdentifier:[NSString stringWithFormat:@"%@-%i", CellID, [indexPath row]]];
     
     if( cell == nil )
     {
-        NSDictionary *model = (NSDictionary *)[self.menu objectAtIndex:indexPath.row];
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellID];
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:[NSString stringWithFormat:@"%@-%i", CellID, [indexPath row]]];
         
+        NSDictionary *model = (NSDictionary *)[self.menu objectAtIndex:indexPath.row];
         UIView *selectedBackgroundViewForCell = [UIView new];
         [selectedBackgroundViewForCell setBackgroundColor:[UIColor colorWithRed:0 green:0 blue:0 alpha:.05]];
         cell.selectedBackgroundView = selectedBackgroundViewForCell;
@@ -556,10 +557,11 @@ static NSString *CellID = @"menu-table-cell";
         [cell.textLabel setFont:[UIFont fontWithName:@"HelveticaNeue-light" size:18]];
         
         EVEMapSwitch *switchView = [[EVEMapSwitch alloc] initWithFrame:CGRectZero];
+        [switchView setTag:[indexPath row]+1];
         switchView.model = model;
         [switchView addTarget:self action:@selector(switchChanged:) forControlEvents:UIControlEventValueChanged];
-        
         cell.accessoryView = switchView;
+        
     }
     
     return cell;
@@ -583,6 +585,7 @@ static NSString *CellID = @"menu-table-cell";
             NSDictionary *config = ann.config;
             if( [[config objectForKey:@"tags"] indexOfObject:[model valueForKey:@"tags"]] )
             {
+                // do your thing with matching objects here
                 // NSLog(@"%@", config);
             }
         }
@@ -599,8 +602,14 @@ static NSString *CellID = @"menu-table-cell";
     
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
-    if ([cellSwitch isOn]) [cellSwitch setOn:NO animated:YES];
-    else [cellSwitch setOn:YES animated:YES];
+    if ([cellSwitch isOn])
+    {
+        [cellSwitch setOn:NO animated:YES];
+    }
+    else
+    {
+        [cellSwitch setOn:YES animated:YES];
+    }
     [self switchChanged:cellSwitch];
 }
 
