@@ -1,0 +1,607 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		7D17DDB518EE781E00D37C50 /* EVETableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D17DDB318EE781E00D37C50 /* EVETableViewController.m */; };
+		7D17DDB618EE781E00D37C50 /* EVETableViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7D17DDB418EE781E00D37C50 /* EVETableViewController.xib */; };
+		7D17DDBA18EE786200D37C50 /* EVEMapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D17DDB818EE786200D37C50 /* EVEMapViewController.m */; };
+		7D17DDBB18EE786200D37C50 /* EVEMapViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7D17DDB918EE786200D37C50 /* EVEMapViewController.xib */; };
+		7D17DDCB18EFE21B00D37C50 /* EVEUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D17DDCA18EFE21B00D37C50 /* EVEUtils.m */; };
+		7D28A24318EE65A800A8A29B /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7D28A24218EE65A800A8A29B /* Foundation.framework */; };
+		7D28A24518EE65A800A8A29B /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7D28A24418EE65A800A8A29B /* CoreGraphics.framework */; };
+		7D28A24718EE65A800A8A29B /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7D28A24618EE65A800A8A29B /* UIKit.framework */; };
+		7D28A24918EE65A800A8A29B /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7D28A24818EE65A800A8A29B /* CoreData.framework */; };
+		7D28A24F18EE65A800A8A29B /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 7D28A24D18EE65A800A8A29B /* InfoPlist.strings */; };
+		7D28A25118EE65A800A8A29B /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D28A25018EE65A800A8A29B /* main.m */; };
+		7D28A25518EE65A800A8A29B /* TPAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D28A25418EE65A800A8A29B /* TPAppDelegate.m */; };
+		7D28A25818EE65A800A8A29B /* eve.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 7D28A25618EE65A800A8A29B /* eve.xcdatamodeld */; };
+		7D28A26118EE65A800A8A29B /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7D28A26018EE65A800A8A29B /* XCTest.framework */; };
+		7D28A26218EE65A800A8A29B /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7D28A24218EE65A800A8A29B /* Foundation.framework */; };
+		7D28A26318EE65A800A8A29B /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7D28A24618EE65A800A8A29B /* UIKit.framework */; };
+		7D28A26418EE65A800A8A29B /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7D28A24818EE65A800A8A29B /* CoreData.framework */; };
+		7D28A26C18EE65A800A8A29B /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 7D28A26A18EE65A800A8A29B /* InfoPlist.strings */; };
+		7D28A26E18EE65A800A8A29B /* eveTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D28A26D18EE65A800A8A29B /* eveTests.m */; };
+		7D28A27818EE65F000A8A29B /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7D28A27718EE65F000A8A29B /* StoreKit.framework */; };
+		7D28A27A18EE660600A8A29B /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7D28A27918EE660600A8A29B /* MapKit.framework */; };
+		7D52473218FF4AC7007BF65D /* EVECell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D52473018FF4AC7007BF65D /* EVECell.m */; };
+		7D52473318FF4AC7007BF65D /* EVECell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7D52473118FF4AC7007BF65D /* EVECell.xib */; };
+		7D55AAE719031AD6009D90A0 /* EVEDescriptionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D55AAE519031AD6009D90A0 /* EVEDescriptionViewController.m */; };
+		7D55AAE819031AD6009D90A0 /* EVEDescriptionViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7D55AAE619031AD6009D90A0 /* EVEDescriptionViewController.xib */; };
+		7D6C7D4C18F7853A0030476D /* EVEFilterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D6C7D4A18F7853A0030476D /* EVEFilterViewController.m */; };
+		7D6C7D4D18F7853A0030476D /* EVEFilterViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7D6C7D4B18F7853A0030476D /* EVEFilterViewController.xib */; };
+		7D6C7D5518F856DF0030476D /* EVEFilterUITextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D6C7D5418F856DF0030476D /* EVEFilterUITextField.m */; };
+		7DBF40B01900D4550006A154 /* EVEItemViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7DBF40AE1900D4550006A154 /* EVEItemViewController.m */; };
+		7DBF40B11900D4550006A154 /* EVEItemViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7DBF40AF1900D4550006A154 /* EVEItemViewController.xib */; };
+		7DC93CF21908BBC7007FF87B /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7DC93CF11908BBC7007FF87B /* Images.xcassets */; };
+		7DC93CF61908E9AA007FF87B /* EVEUserViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7DC93CF41908E9AA007FF87B /* EVEUserViewController.m */; };
+		7DC93CF71908E9AA007FF87B /* EVEUserViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7DC93CF51908E9AA007FF87B /* EVEUserViewController.xib */; };
+		7DC93D051908F7FA007FF87B /* EVEShareViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7DC93D031908F7FA007FF87B /* EVEShareViewController.m */; };
+		7DC93D061908F7FA007FF87B /* EVEShareViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7DC93D041908F7FA007FF87B /* EVEShareViewController.xib */; };
+		7DF4BDF718F1EFF500706ACB /* EVEAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = 7DF4BDF618F1EFF500706ACB /* EVEAnnotation.m */; };
+		9221BC8A19195AFE00F3B169 /* EVEMapSwitch.m in Sources */ = {isa = PBXBuildFile; fileRef = 9221BC8919195AFE00F3B169 /* EVEMapSwitch.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		7D28A26518EE65A800A8A29B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 7D28A23718EE65A800A8A29B /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 7D28A23E18EE65A800A8A29B;
+			remoteInfo = eve;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		7D17DDB218EE781E00D37C50 /* EVETableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EVETableViewController.h; sourceTree = "<group>"; };
+		7D17DDB318EE781E00D37C50 /* EVETableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EVETableViewController.m; sourceTree = "<group>"; };
+		7D17DDB418EE781E00D37C50 /* EVETableViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EVETableViewController.xib; sourceTree = "<group>"; };
+		7D17DDB718EE786200D37C50 /* EVEMapViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EVEMapViewController.h; sourceTree = "<group>"; };
+		7D17DDB818EE786200D37C50 /* EVEMapViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EVEMapViewController.m; sourceTree = "<group>"; };
+		7D17DDB918EE786200D37C50 /* EVEMapViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EVEMapViewController.xib; sourceTree = "<group>"; };
+		7D17DDC918EFE21B00D37C50 /* EVEUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EVEUtils.h; sourceTree = "<group>"; };
+		7D17DDCA18EFE21B00D37C50 /* EVEUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EVEUtils.m; sourceTree = "<group>"; };
+		7D28A23F18EE65A800A8A29B /* eve.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = eve.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		7D28A24218EE65A800A8A29B /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		7D28A24418EE65A800A8A29B /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		7D28A24618EE65A800A8A29B /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		7D28A24818EE65A800A8A29B /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		7D28A24C18EE65A800A8A29B /* eve-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "eve-Info.plist"; sourceTree = "<group>"; };
+		7D28A24E18EE65A800A8A29B /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		7D28A25018EE65A800A8A29B /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		7D28A25218EE65A800A8A29B /* eve-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "eve-Prefix.pch"; sourceTree = "<group>"; };
+		7D28A25318EE65A800A8A29B /* TPAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TPAppDelegate.h; sourceTree = "<group>"; };
+		7D28A25418EE65A800A8A29B /* TPAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TPAppDelegate.m; sourceTree = "<group>"; };
+		7D28A25718EE65A800A8A29B /* eve.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = eve.xcdatamodel; sourceTree = "<group>"; };
+		7D28A25F18EE65A800A8A29B /* eveTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = eveTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		7D28A26018EE65A800A8A29B /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
+		7D28A26918EE65A800A8A29B /* eveTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "eveTests-Info.plist"; sourceTree = "<group>"; };
+		7D28A26B18EE65A800A8A29B /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		7D28A26D18EE65A800A8A29B /* eveTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = eveTests.m; sourceTree = "<group>"; };
+		7D28A27718EE65F000A8A29B /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
+		7D28A27918EE660600A8A29B /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
+		7D52472F18FF4AC7007BF65D /* EVECell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EVECell.h; sourceTree = "<group>"; };
+		7D52473018FF4AC7007BF65D /* EVECell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EVECell.m; sourceTree = "<group>"; };
+		7D52473118FF4AC7007BF65D /* EVECell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EVECell.xib; sourceTree = "<group>"; };
+		7D55AAE419031AD6009D90A0 /* EVEDescriptionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EVEDescriptionViewController.h; sourceTree = "<group>"; };
+		7D55AAE519031AD6009D90A0 /* EVEDescriptionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EVEDescriptionViewController.m; sourceTree = "<group>"; };
+		7D55AAE619031AD6009D90A0 /* EVEDescriptionViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EVEDescriptionViewController.xib; sourceTree = "<group>"; };
+		7D6C7D4918F7853A0030476D /* EVEFilterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EVEFilterViewController.h; sourceTree = "<group>"; };
+		7D6C7D4A18F7853A0030476D /* EVEFilterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EVEFilterViewController.m; sourceTree = "<group>"; };
+		7D6C7D4B18F7853A0030476D /* EVEFilterViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EVEFilterViewController.xib; sourceTree = "<group>"; };
+		7D6C7D5318F856DF0030476D /* EVEFilterUITextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EVEFilterUITextField.h; sourceTree = "<group>"; };
+		7D6C7D5418F856DF0030476D /* EVEFilterUITextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EVEFilterUITextField.m; sourceTree = "<group>"; };
+		7DBF40AD1900D4550006A154 /* EVEItemViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EVEItemViewController.h; sourceTree = "<group>"; };
+		7DBF40AE1900D4550006A154 /* EVEItemViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EVEItemViewController.m; sourceTree = "<group>"; };
+		7DBF40AF1900D4550006A154 /* EVEItemViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EVEItemViewController.xib; sourceTree = "<group>"; };
+		7DC93CF11908BBC7007FF87B /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		7DC93CF31908E9AA007FF87B /* EVEUserViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EVEUserViewController.h; sourceTree = "<group>"; };
+		7DC93CF41908E9AA007FF87B /* EVEUserViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EVEUserViewController.m; sourceTree = "<group>"; };
+		7DC93CF51908E9AA007FF87B /* EVEUserViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EVEUserViewController.xib; sourceTree = "<group>"; };
+		7DC93D021908F7FA007FF87B /* EVEShareViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EVEShareViewController.h; sourceTree = "<group>"; };
+		7DC93D031908F7FA007FF87B /* EVEShareViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EVEShareViewController.m; sourceTree = "<group>"; };
+		7DC93D041908F7FA007FF87B /* EVEShareViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EVEShareViewController.xib; sourceTree = "<group>"; };
+		7DF4BDF518F1EFF500706ACB /* EVEAnnotation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EVEAnnotation.h; sourceTree = "<group>"; };
+		7DF4BDF618F1EFF500706ACB /* EVEAnnotation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EVEAnnotation.m; sourceTree = "<group>"; };
+		9221BC8819195AFE00F3B169 /* EVEMapSwitch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EVEMapSwitch.h; sourceTree = "<group>"; };
+		9221BC8919195AFE00F3B169 /* EVEMapSwitch.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EVEMapSwitch.m; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		7D28A23C18EE65A800A8A29B /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7D28A24518EE65A800A8A29B /* CoreGraphics.framework in Frameworks */,
+				7D28A24918EE65A800A8A29B /* CoreData.framework in Frameworks */,
+				7D28A27818EE65F000A8A29B /* StoreKit.framework in Frameworks */,
+				7D28A24718EE65A800A8A29B /* UIKit.framework in Frameworks */,
+				7D28A27A18EE660600A8A29B /* MapKit.framework in Frameworks */,
+				7D28A24318EE65A800A8A29B /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		7D28A25C18EE65A800A8A29B /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7D28A26118EE65A800A8A29B /* XCTest.framework in Frameworks */,
+				7D28A26418EE65A800A8A29B /* CoreData.framework in Frameworks */,
+				7D28A26318EE65A800A8A29B /* UIKit.framework in Frameworks */,
+				7D28A26218EE65A800A8A29B /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		7D28A23618EE65A800A8A29B = {
+			isa = PBXGroup;
+			children = (
+				7D28A24A18EE65A800A8A29B /* eve */,
+				7D28A26718EE65A800A8A29B /* eveTests */,
+				7D28A24118EE65A800A8A29B /* Frameworks */,
+				7D28A24018EE65A800A8A29B /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		7D28A24018EE65A800A8A29B /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				7D28A23F18EE65A800A8A29B /* eve.app */,
+				7D28A25F18EE65A800A8A29B /* eveTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		7D28A24118EE65A800A8A29B /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				7D28A27918EE660600A8A29B /* MapKit.framework */,
+				7D28A27718EE65F000A8A29B /* StoreKit.framework */,
+				7D28A24218EE65A800A8A29B /* Foundation.framework */,
+				7D28A24418EE65A800A8A29B /* CoreGraphics.framework */,
+				7D28A24618EE65A800A8A29B /* UIKit.framework */,
+				7D28A24818EE65A800A8A29B /* CoreData.framework */,
+				7D28A26018EE65A800A8A29B /* XCTest.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		7D28A24A18EE65A800A8A29B /* eve */ = {
+			isa = PBXGroup;
+			children = (
+				7D28A25318EE65A800A8A29B /* TPAppDelegate.h */,
+				7D28A25418EE65A800A8A29B /* TPAppDelegate.m */,
+				7D28A25618EE65A800A8A29B /* eve.xcdatamodeld */,
+				7D28A24B18EE65A800A8A29B /* Supporting Files */,
+				7D17DDB218EE781E00D37C50 /* EVETableViewController.h */,
+				7D17DDB318EE781E00D37C50 /* EVETableViewController.m */,
+				7D17DDB418EE781E00D37C50 /* EVETableViewController.xib */,
+				7D17DDB718EE786200D37C50 /* EVEMapViewController.h */,
+				7D17DDB818EE786200D37C50 /* EVEMapViewController.m */,
+				7D17DDB918EE786200D37C50 /* EVEMapViewController.xib */,
+				7D17DDC918EFE21B00D37C50 /* EVEUtils.h */,
+				7D17DDCA18EFE21B00D37C50 /* EVEUtils.m */,
+				7DF4BDF518F1EFF500706ACB /* EVEAnnotation.h */,
+				7DF4BDF618F1EFF500706ACB /* EVEAnnotation.m */,
+				7D6C7D4918F7853A0030476D /* EVEFilterViewController.h */,
+				7D6C7D4A18F7853A0030476D /* EVEFilterViewController.m */,
+				7D6C7D4B18F7853A0030476D /* EVEFilterViewController.xib */,
+				7D6C7D5318F856DF0030476D /* EVEFilterUITextField.h */,
+				7D6C7D5418F856DF0030476D /* EVEFilterUITextField.m */,
+				7D52472F18FF4AC7007BF65D /* EVECell.h */,
+				7D52473018FF4AC7007BF65D /* EVECell.m */,
+				7D52473118FF4AC7007BF65D /* EVECell.xib */,
+				7DBF40AD1900D4550006A154 /* EVEItemViewController.h */,
+				7DBF40AE1900D4550006A154 /* EVEItemViewController.m */,
+				7DBF40AF1900D4550006A154 /* EVEItemViewController.xib */,
+				7D55AAE419031AD6009D90A0 /* EVEDescriptionViewController.h */,
+				7D55AAE519031AD6009D90A0 /* EVEDescriptionViewController.m */,
+				7D55AAE619031AD6009D90A0 /* EVEDescriptionViewController.xib */,
+				7DC93CF11908BBC7007FF87B /* Images.xcassets */,
+				7DC93CF31908E9AA007FF87B /* EVEUserViewController.h */,
+				7DC93CF41908E9AA007FF87B /* EVEUserViewController.m */,
+				7DC93CF51908E9AA007FF87B /* EVEUserViewController.xib */,
+				7DC93D021908F7FA007FF87B /* EVEShareViewController.h */,
+				7DC93D031908F7FA007FF87B /* EVEShareViewController.m */,
+				7DC93D041908F7FA007FF87B /* EVEShareViewController.xib */,
+				9221BC8819195AFE00F3B169 /* EVEMapSwitch.h */,
+				9221BC8919195AFE00F3B169 /* EVEMapSwitch.m */,
+			);
+			path = eve;
+			sourceTree = "<group>";
+		};
+		7D28A24B18EE65A800A8A29B /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				7D28A24C18EE65A800A8A29B /* eve-Info.plist */,
+				7D28A24D18EE65A800A8A29B /* InfoPlist.strings */,
+				7D28A25018EE65A800A8A29B /* main.m */,
+				7D28A25218EE65A800A8A29B /* eve-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		7D28A26718EE65A800A8A29B /* eveTests */ = {
+			isa = PBXGroup;
+			children = (
+				7D28A26D18EE65A800A8A29B /* eveTests.m */,
+				7D28A26818EE65A800A8A29B /* Supporting Files */,
+			);
+			path = eveTests;
+			sourceTree = "<group>";
+		};
+		7D28A26818EE65A800A8A29B /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				7D28A26918EE65A800A8A29B /* eveTests-Info.plist */,
+				7D28A26A18EE65A800A8A29B /* InfoPlist.strings */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		7D28A23E18EE65A800A8A29B /* eve */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 7D28A27118EE65A800A8A29B /* Build configuration list for PBXNativeTarget "eve" */;
+			buildPhases = (
+				7D28A23B18EE65A800A8A29B /* Sources */,
+				7D28A23C18EE65A800A8A29B /* Frameworks */,
+				7D28A23D18EE65A800A8A29B /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = eve;
+			productName = eve;
+			productReference = 7D28A23F18EE65A800A8A29B /* eve.app */;
+			productType = "com.apple.product-type.application";
+		};
+		7D28A25E18EE65A800A8A29B /* eveTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 7D28A27418EE65A800A8A29B /* Build configuration list for PBXNativeTarget "eveTests" */;
+			buildPhases = (
+				7D28A25B18EE65A800A8A29B /* Sources */,
+				7D28A25C18EE65A800A8A29B /* Frameworks */,
+				7D28A25D18EE65A800A8A29B /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				7D28A26618EE65A800A8A29B /* PBXTargetDependency */,
+			);
+			name = eveTests;
+			productName = eveTests;
+			productReference = 7D28A25F18EE65A800A8A29B /* eveTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		7D28A23718EE65A800A8A29B /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				CLASSPREFIX = TP;
+				LastUpgradeCheck = 0510;
+				ORGANIZATIONNAME = tdp;
+				TargetAttributes = {
+					7D28A23E18EE65A800A8A29B = {
+						DevelopmentTeam = F2HZNSPT52;
+						SystemCapabilities = {
+							com.apple.InAppPurchase = {
+								enabled = 1;
+							};
+							com.apple.iOS = {
+								enabled = 1;
+							};
+						};
+					};
+					7D28A25E18EE65A800A8A29B = {
+						TestTargetID = 7D28A23E18EE65A800A8A29B;
+					};
+				};
+			};
+			buildConfigurationList = 7D28A23A18EE65A800A8A29B /* Build configuration list for PBXProject "eve" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 7D28A23618EE65A800A8A29B;
+			productRefGroup = 7D28A24018EE65A800A8A29B /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				7D28A23E18EE65A800A8A29B /* eve */,
+				7D28A25E18EE65A800A8A29B /* eveTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		7D28A23D18EE65A800A8A29B /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7D17DDB618EE781E00D37C50 /* EVETableViewController.xib in Resources */,
+				7DC93CF21908BBC7007FF87B /* Images.xcassets in Resources */,
+				7D28A24F18EE65A800A8A29B /* InfoPlist.strings in Resources */,
+				7DBF40B11900D4550006A154 /* EVEItemViewController.xib in Resources */,
+				7D6C7D4D18F7853A0030476D /* EVEFilterViewController.xib in Resources */,
+				7D17DDBB18EE786200D37C50 /* EVEMapViewController.xib in Resources */,
+				7D55AAE819031AD6009D90A0 /* EVEDescriptionViewController.xib in Resources */,
+				7DC93CF71908E9AA007FF87B /* EVEUserViewController.xib in Resources */,
+				7D52473318FF4AC7007BF65D /* EVECell.xib in Resources */,
+				7DC93D061908F7FA007FF87B /* EVEShareViewController.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		7D28A25D18EE65A800A8A29B /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7D28A26C18EE65A800A8A29B /* InfoPlist.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		7D28A23B18EE65A800A8A29B /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7D55AAE719031AD6009D90A0 /* EVEDescriptionViewController.m in Sources */,
+				7DC93CF61908E9AA007FF87B /* EVEUserViewController.m in Sources */,
+				7D52473218FF4AC7007BF65D /* EVECell.m in Sources */,
+				7D17DDBA18EE786200D37C50 /* EVEMapViewController.m in Sources */,
+				7DC93D051908F7FA007FF87B /* EVEShareViewController.m in Sources */,
+				7D6C7D4C18F7853A0030476D /* EVEFilterViewController.m in Sources */,
+				7D28A25518EE65A800A8A29B /* TPAppDelegate.m in Sources */,
+				7D28A25118EE65A800A8A29B /* main.m in Sources */,
+				9221BC8A19195AFE00F3B169 /* EVEMapSwitch.m in Sources */,
+				7D17DDB518EE781E00D37C50 /* EVETableViewController.m in Sources */,
+				7DF4BDF718F1EFF500706ACB /* EVEAnnotation.m in Sources */,
+				7DBF40B01900D4550006A154 /* EVEItemViewController.m in Sources */,
+				7D17DDCB18EFE21B00D37C50 /* EVEUtils.m in Sources */,
+				7D6C7D5518F856DF0030476D /* EVEFilterUITextField.m in Sources */,
+				7D28A25818EE65A800A8A29B /* eve.xcdatamodeld in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		7D28A25B18EE65A800A8A29B /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7D28A26E18EE65A800A8A29B /* eveTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		7D28A26618EE65A800A8A29B /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 7D28A23E18EE65A800A8A29B /* eve */;
+			targetProxy = 7D28A26518EE65A800A8A29B /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		7D28A24D18EE65A800A8A29B /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				7D28A24E18EE65A800A8A29B /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		7D28A26A18EE65A800A8A29B /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				7D28A26B18EE65A800A8A29B /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		7D28A26F18EE65A800A8A29B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		7D28A27018EE65A800A8A29B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				ENABLE_NS_ASSERTIONS = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		7D28A27218EE65A800A8A29B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "eve/eve-Prefix.pch";
+				INFOPLIST_FILE = "eve/eve-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		7D28A27318EE65A800A8A29B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "eve/eve-Prefix.pch";
+				INFOPLIST_FILE = "eve/eve-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+		7D28A27518EE65A800A8A29B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/eve.app/eve";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "eve/eve-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = "eveTests/eveTests-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUNDLE_LOADER)";
+				WRAPPER_EXTENSION = xctest;
+			};
+			name = Debug;
+		};
+		7D28A27618EE65A800A8A29B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/eve.app/eve";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "eve/eve-Prefix.pch";
+				INFOPLIST_FILE = "eveTests/eveTests-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUNDLE_LOADER)";
+				WRAPPER_EXTENSION = xctest;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		7D28A23A18EE65A800A8A29B /* Build configuration list for PBXProject "eve" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				7D28A26F18EE65A800A8A29B /* Debug */,
+				7D28A27018EE65A800A8A29B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		7D28A27118EE65A800A8A29B /* Build configuration list for PBXNativeTarget "eve" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				7D28A27218EE65A800A8A29B /* Debug */,
+				7D28A27318EE65A800A8A29B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		7D28A27418EE65A800A8A29B /* Build configuration list for PBXNativeTarget "eveTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				7D28A27518EE65A800A8A29B /* Debug */,
+				7D28A27618EE65A800A8A29B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		7D28A25618EE65A800A8A29B /* eve.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				7D28A25718EE65A800A8A29B /* eve.xcdatamodel */,
+			);
+			currentVersion = 7D28A25718EE65A800A8A29B /* eve.xcdatamodel */;
+			path = eve.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
+	};
+	rootObject = 7D28A23718EE65A800A8A29B /* Project object */;
+}

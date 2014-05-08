@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="5056" systemVersion="13C1021" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3733"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="EVEMapViewController">
+            <connections>
+                <outlet property="MapView" destination="S69-KZ-jFQ" id="RMZ-Pt-DXq"/>
+                <outlet property="dateControl" destination="auS-83-xOZ" id="iPs-MS-eqV"/>
+                <outlet property="dateControlScroll" destination="xHo-Mh-M0n" id="3Vu-nH-O9N"/>
+                <outlet property="dateControlView" destination="tP7-Nd-qCW" id="8Bg-fe-9IG"/>
+                <outlet property="filterView" destination="qXU-od-XcM" id="iJa-16-pAm"/>
+                <outlet property="localizeButton" destination="7QL-PR-DeZ" id="ENk-qZ-PWK"/>
+                <outlet property="localizeViewWrap" destination="pUp-9j-hXH" id="Lc3-5y-0Mv"/>
+                <outlet property="menuList" destination="Cbo-v4-eex" id="U4v-BB-h06"/>
+                <outlet property="menuListView" destination="KhY-1r-UDP" id="eDF-sy-gxf"/>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view autoresizesSubviews="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" id="S69-KZ-jFQ">
+                    <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                </mapView>
+                <view contentMode="scaleToFill" id="qXU-od-XcM">
+                    <rect key="frame" x="0.0" y="-462" width="320" height="462"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <subviews>
+                        <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" id="h2A-JZ-sPt">
+                            <rect key="frame" x="0.0" y="64" width="320" height="402"/>
+                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                            <subviews>
+                                <view contentMode="scaleToFill" id="d6r-WZ-6xD">
+                                    <rect key="frame" x="0.0" y="0.0" width="320" height="402"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                    <subviews>
+                                        <view autoresizesSubviews="NO" tag="1" contentMode="scaleToFill" id="tP7-Nd-qCW">
+                                            <rect key="frame" x="0.0" y="0.0" width="320" height="52"/>
+                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                            <subviews>
+                                                <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" id="xHo-Mh-M0n">
+                                                    <rect key="frame" x="0.0" y="0.0" width="320" height="50"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                                    <subviews>
+                                                        <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" id="auS-83-xOZ">
+                                                            <rect key="frame" x="15" y="11" width="290" height="29"/>
+                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                            <segments>
+                                                                <segment title="Tonight"/>
+                                                                <segment title="Tomorrow"/>
+                                                                <segment title="This Weekend"/>
+                                                            </segments>
+                                                            <color key="tintColor" red="0.1940713168" green="0.55216221740000004" blue="0.57075095659999997" alpha="1" colorSpace="calibratedRGB"/>
+                                                            <connections>
+                                                                <action selector="dateControlSelected:" destination="-2" eventType="valueChanged" id="4kZ-f0-HEJ"/>
+                                                            </connections>
+                                                        </segmentedControl>
+                                                    </subviews>
+                                                </scrollView>
+                                                <view alpha="0.10000000149011612" contentMode="scaleToFill" id="94D-ut-Hd7">
+                                                    <rect key="frame" x="0.0" y="51" width="320" height="1"/>
+                                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                                    <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                                </view>
+                                            </subviews>
+                                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        </view>
+                                        <view contentMode="scaleToFill" id="KhY-1r-UDP">
+                                            <rect key="frame" x="0.0" y="52" width="320" height="342"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <subviews>
+                                                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="54" sectionHeaderHeight="22" sectionFooterHeight="22" id="Cbo-v4-eex">
+                                                    <rect key="frame" x="0.0" y="0.0" width="320" height="342"/>
+                                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <inset key="contentInset" minX="0.0" minY="0.0" maxX="0.0" maxY="66"/>
+                                                    <connections>
+                                                        <outlet property="dataSource" destination="-1" id="Yd8-xb-4oe"/>
+                                                        <outlet property="delegate" destination="-1" id="svw-Hk-5KI"/>
+                                                    </connections>
+                                                </tableView>
+                                                <view alpha="0.05000000074505806" contentMode="scaleToFill" id="X1q-mK-ZRA">
+                                                    <rect key="frame" x="0.0" y="0.0" width="320" height="2"/>
+                                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                                    <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                                </view>
+                                            </subviews>
+                                            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                                        </view>
+                                    </subviews>
+                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                </view>
+                            </subviews>
+                        </scrollView>
+                        <view contentMode="scaleToFill" id="HgD-O8-9f3">
+                            <rect key="frame" x="0.0" y="0.0" width="320" height="64"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        </view>
+                    </subviews>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                </view>
+                <view contentMode="scaleToFill" id="pUp-9j-hXH">
+                    <rect key="frame" x="10" y="470" width="40" height="40"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <subviews>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="7QL-PR-DeZ">
+                            <rect key="frame" x="6" y="6" width="28" height="28"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <state key="normal">
+                                <color key="titleColor" red="0.0" green="0.69910617795389052" blue="0.69910617795389052" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                            </state>
+                        </button>
+                    </subviews>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                </view>
+            </subviews>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+            <simulatedStatusBarMetrics key="simulatedStatusBarMetrics"/>
+            <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
+        </view>
+    </objects>
+</document>
