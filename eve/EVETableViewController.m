@@ -9,6 +9,7 @@
 #import <MapKit/MapKit.h>
 #import "EVETableViewController.h"
 #import "EVEItemViewController.h"
+#import "EVEDetailViewController.h"
 #import "EVEFilterViewController.h"
 #import "EVECell.h"
 #import "EVEUtils.h"
@@ -240,7 +241,7 @@ static NSString *CellID = @"list-table-cell";
 -( void ) getFeed:( NSString *)feedPath page:(int) pageParam
 {
     self.results = [self.Utils getCollectionforFeed:[[NSString alloc] initWithFormat:@"%@%i", feedPath, pageParam]];
-    NSLog(@"%lu", (unsigned long)[self.results count]);
+    //NSLog(@"%lu", (unsigned long)[self.results count]);
     
     if( [self.results count] > 0 )
     {
@@ -295,6 +296,7 @@ static NSString *CellID = @"list-table-cell";
     else
     {
         [self.Utils netWorkErrorHandler];
+        self.fetching = NO;
     }
 }
 
@@ -305,20 +307,18 @@ static NSString *CellID = @"list-table-cell";
     
     if( [self.Utils eveIsOnline] )
     {
-    self.collection =[[NSArray alloc] init];
-    self.set = 1;
-    [self getCollection];
-    
-    
-    
-    int64_t delayInSeconds = 2.1f;
-    
-    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);
-    
-    dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+        self.collection =[[NSArray alloc] init];
+        self.set = 1;
+        [self getCollection];
         
-        [self.tableView setContentOffset:CGPointMake(0, -64) animated:NO];
-    });
+        int64_t delayInSeconds = 2.1f;
+        
+        dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);
+        
+        dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+            
+            [self.tableView setContentOffset:CGPointMake(0, -64) animated:NO];
+        });
     }
     else
     {
@@ -395,31 +395,15 @@ static NSString *CellID = @"list-table-cell";
     
     NSString *tagString = [NSString stringWithString:[[[NSArray arrayWithArray:[model objectForKey:@"tags"]] componentsJoinedByString:@", "] uppercaseString]];
     NSString *timeString = [self.Utils parseUTCDate:[model objectForKey:@"startTime"] pattern:@"EEEE MMM d @ h:mm a"];
+    cell.latitude = [[model objectForKey:@"latitude"] floatValue];
+    cell.longitude = [[model objectForKey:@"longitude"] floatValue];
     
-    [cell.nameLabel setText:[model objectForKey:@"name"]];
+    [cell.nameLabel setText:[[model objectForKey:@"name"] uppercaseString]];
     [cell.descLabel setText:[model objectForKey:@"description"]];
     [cell.tagsLabel setText:[NSString stringWithFormat:@"%@", tagString]];
     [cell.timeLabel setText:[timeString uppercaseString]];
+    [cell.distanceLabel setText:[[[model objectForKey:@"price"] intValue] == 0 ? @"Free" : [model objectForKey:@"admission"] uppercaseString]];
     
-    
-    
-//    if([cell.distanceLabel.text isEqualToString:@"Loading..."] == YES || [cell.distanceLabel.text isEqualToString:@"0.0 Miles"] == YES)
-//    {
-//        [self findDistanceFrom:[MKMapItem mapItemForCurrentLocation] to:destinationItem forLabel:cell.distanceLabel];
-//    }
-    
-//    UILabel *distanceLabel = (UILabel *)[cell viewWithTag:[indexPath row]+1];
-//    
-//    if( distanceLabel == nil )
-//    {
-//        CLLocationCoordinate2D location = CLLocationCoordinate2DMake([[model objectForKey:@"latitude"] floatValue], [[model objectForKey:@"longitude"] floatValue]);
-//        MKPlacemark *destinationMark = [[MKPlacemark alloc] initWithCoordinate:location addressDictionary:nil];
-//        MKMapItem *destinationItem = [[MKMapItem alloc] initWithPlacemark:destinationMark];
-//        
-//        [self findDistanceFrom:[MKMapItem mapItemForCurrentLocation] to:destinationItem forLabel:cell.distanceLabel];
-//        [cell.distanceLabel setTag:[indexPath row]+1];
-//    }
-//    
     return cell;
 }
 
@@ -474,20 +458,6 @@ static NSString *CellID = @"list-table-cell";
     [self.spinner stopAnimating];
 }
 
-/**
- * @desc bottom scroll update event listener
- **/
--(void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
-{
-
-};
-
-/** **/
--(void) scrollViewDidScroll:(UIScrollView *)scrollView
-{
-
-}
-
 /** **/
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
     float bottomEdge = scrollView.contentOffset.y + scrollView.frame.size.height;
@@ -517,12 +487,6 @@ static NSString *CellID = @"list-table-cell";
     }
 }
 
-/** **/
--(void)scrollViewWillBeginDecelerating:(UIScrollView *)scrollView
-{
-    
-}
-
 // In a xib-based application, navigation from a table can be handled in -tableView:didSelectRowAtIndexPath:
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -530,7 +494,7 @@ static NSString *CellID = @"list-table-cell";
     // Navigation logic may go here, for example:
     // Create the next view controller.
     
-    EVEItemViewController *itemViewController = [[EVEItemViewController alloc] init];
+    EVEDetailViewController *itemViewController = [[EVEDetailViewController alloc] init];
     [itemViewController applyConfig:attributes];
     itemViewController.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:itemViewController animated:YES];

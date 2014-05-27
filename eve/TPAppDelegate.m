@@ -78,7 +78,7 @@
     // tabBar
     self.TabBar = [[UITabBarController alloc] init];
     self.TabBar.tabBar.tintColor = [UIColor colorWithRed:0.0/255.0 green:159.0/255.0 blue:195.0/255.0 alpha:1];
-    self.TabBar.viewControllers = @[ self.MapContainer, self.ListContainer, self.UserContainer ];
+    self.TabBar.viewControllers = @[ self.ListContainer, self.MapContainer, self.UserContainer ];
     
     // window
     [self.window setRootViewController:self.TabBar];

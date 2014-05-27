@@ -45,12 +45,10 @@
     NSArray *itemArray = [NSArray arrayWithObjects: @"Saved", @"Shared", nil];
     UISegmentedControl *segmentedControl = [[UISegmentedControl alloc] initWithItems:itemArray];
     segmentedControl.frame = CGRectMake(0, 0, 150, 30);
-   // segmentedControl.segmentedControlStyle = UISegmentedControlStylePlain;
     segmentedControl.selectedSegmentIndex = 0;
     [segmentedControl addTarget:self
                          action:@selector(pickOne:)
                forControlEvents:UIControlEventValueChanged];
-	//[self.view addSubview:segmentedControl];
     self.navigationItem.titleView = segmentedControl;
 }
 

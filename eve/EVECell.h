@@ -9,9 +9,14 @@
 #import <UIKit/UIKit.h>
 
 @interface EVECell : UITableViewCell
+@property ( nonatomic ) float latitude;
+@property ( nonatomic ) float longitude;
+@property ( strong, nonatomic ) NSString *distance;
 @property (weak, nonatomic) IBOutlet UILabel *nameLabel;
 @property (weak, nonatomic) IBOutlet UILabel *descLabel;
 @property (weak, nonatomic) IBOutlet UILabel *tagsLabel;
 @property (weak, nonatomic) IBOutlet UILabel *timeLabel;
 @property (weak, nonatomic) IBOutlet UILabel *distanceLabel;
+
+-( void ) setDistanceLabelText;
 @end

@@ -20,6 +20,7 @@
 @property (nonatomic, strong) CLGeocoder *geocoder;
 @property (nonatomic, strong) NSMutableDictionary *theme;
 @property (nonatomic, strong) Reachability *reach;
+@property (nonatomic) NetworkStatus *netStatus;
 @property (nonatomic) BOOL appIsOnline;
 
 -( NSArray *) getCollectionforFeed:(NSString *) feedPath;
@@ -36,6 +37,8 @@
 
 -( void ) initPostController:( UIViewController *) controller;
 
++( NSString *) parseTime:( int ) mins;
+
 -( NSString *) parseUTCDate:( NSString *) utcDate;
 
 -( NSString *) parseUTCDate:( NSString *) utcDate pattern:(NSString *) pattern;
@@ -50,6 +53,8 @@
 
 -( NSDate *) getNextWeekend;
 
--(BOOL) eveIsOnline;
+-( NSDate *) utcToDate: ( NSString *) dateString;
+
+-(int) eveIsOnline;
 
 @end

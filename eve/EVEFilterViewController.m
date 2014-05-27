@@ -82,7 +82,7 @@ static NSString *CellID = @"city-table-cell";
     [self.navigationController.navigationBar setBarTintColor:[self.Utils.theme valueForKey:@"themeColor"]];
     self.navigationController.navigationBar.tintColor = [self.Utils.theme valueForKey:@"menuFontColor"];
     
-    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Cancel" style:UIBarButtonItemStylePlain target:self action:@selector(closeView)];
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Cancel" style:UIBarButtonItemStylePlain target:self action:@selector(dismiss)];
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Done" style:UIBarButtonItemStylePlain target:self action:@selector(applySettings)];
 }
 
@@ -365,7 +365,7 @@ static NSString *CellID = @"city-table-cell";
 }
 
 /** **/
--( void )closeView
+-( void )dismiss
 {
     [self dismissViewControllerAnimated:YES completion:nil];
 }

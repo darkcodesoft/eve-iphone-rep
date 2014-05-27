@@ -38,6 +38,7 @@
 
 @implementation EVEItemViewController
 
+/** **/
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -47,9 +48,7 @@
     return self;
 }
 
-/**
- *
- **/
+/** **/
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -87,9 +86,7 @@
     
 }
 
-/**
- *
- **/
+/** **/
 -( void ) initConfig
 {
     self.Utils = [[EVEUtils alloc] init];
@@ -161,9 +158,7 @@
     NSLog(@"Transaction initialized.");
 }
 
-/**
- *
- **/
+/** **/
 -( void ) drawMap
 {
     CLLocationCoordinate2D location = CLLocationCoordinate2DMake(self.latitude, self.longitude);
@@ -176,18 +171,14 @@
     [self.MapView addAnnotation: self.annotation];
 }
 
-/**
- *
- **/
+/** **/
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
 
-/**
- *
- **/
+/** **/
 -(void)viewWillAppear:(BOOL)animated
 {
     

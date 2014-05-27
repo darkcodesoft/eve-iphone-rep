@@ -8,6 +8,7 @@
 
 #import "EVEUtils.h"
 #import "EVEShareViewController.h"
+#import "EVEUserViewController.h"
 #import "Reachability.h"
 
 @interface EVEUtils () <CLLocationManagerDelegate>
@@ -47,7 +48,7 @@
 -( NSArray *) getCollectionforFeed:(NSString *)feedPath
 {
     //NSLog(@"%@", self.server);
-    NSLog(@"%@", feedPath);
+    //NSLog(@"%@", feedPath);
     NSArray *collection = [NSArray new];
     NSString *CString = [[NSString alloc] initWithFormat:@"%@%@", self.server, feedPath];
     
@@ -87,9 +88,9 @@
         NSLog(@"Response is empty.");
     }
     
-    NSLog(@"********************");
-    NSLog(@"%i", [collection count]);
-    NSLog(@"********************");
+    //NSLog(@"********************");
+    //NSLog(@"%i", [collection count]);
+    //NSLog(@"********************");
     
     return collection;
 
@@ -261,7 +262,7 @@
     
     // MapViewController config
     NSMutableDictionary *mapViewControllerConfig = [[NSMutableDictionary alloc] init];
-    [mapViewControllerConfig setValue:@"Nabe Pulse" forKey:@"title"];
+    [mapViewControllerConfig setValue:@"Pulse" forKey:@"title"];
     
     // PostViewController config
     NSMutableDictionary *PostViewControllerConfig = [[NSMutableDictionary alloc] init];
@@ -285,29 +286,22 @@
     [self.theme setValue:[UIColor colorWithRed:0/255.0f green:204/255.0f blue:204/255.0f alpha:1.0f] forKey:@"themeColor"];
     [self.theme setValue:[UIColor whiteColor] forKey:@"menuFontColor"];
     
-//    
-//    Reachability* reach = [Reachability reachabilityWithHostname:@"www.google.com"];
-//    
-//    // Set the blocks
-//    reach.reachableBlock = ^(Reachability*reach)
-//    {
-//        NSLog(@"REACHABLE!");
-//        _appIsOnline = YES;
-//    };
-//    
-//    reach.unreachableBlock = ^(Reachability*reach)
-//    {
-//        _appIsOnline = NO;
-//        NSLog(@"UNREACHABLE!");
-//    };
-//    
-//    // Start the notifier, which will cause the reachability object to retain itself!
-//    [reach startNotifier];
-    
     self.reach = [Reachability reachabilityWithHostname:@"http://tp-eve.aws.af.cm"];
+    
+    // notification
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(notificationHandler)
+                                                 name:@"UPost Event Reminder"
+                                               object:nil];
+    
 }
 
-- (BOOL) eveIsOnline
+-( void ) notificationHandler
+{
+    [EVEUserViewController updateNotification];
+}
+
+- (int) eveIsOnline
 {
     BOOL *res = NO;
     NSURL *url = [NSURL URLWithString:@"http://tp-eve.aws.af.cm"];
@@ -319,16 +313,12 @@
     if( response )
     {
         res = (BOOL *)YES;
-//        [self.reach stopNotifier];
     }
     else
     {
         [self.reach startNotifier];
     }
-    
-    //NSLog(@"%@", response);
-    //return (response != nil);
-    return (res != nil);
+    return ( response != nil );
 }
 
 -( void ) netWorkErrorHandler
@@ -340,13 +330,28 @@
     });
 }
 
+-( NSDate *) utcToDate: ( NSString *) dateString
+{
+    //NSLog(@"%@", dateString);
+    
+    NSDateFormatter *df = [[NSDateFormatter alloc] init];
+    
+    [df setDateFormat:@"yyyy-MM-dd'T'HH:mm:ss'Z'"];
+    
+    NSDate *date = [[NSDate alloc] init];
+    
+    date = [df dateFromString: dateString];
+    
+    return date;
+}
+
 /**
  * @desc
  * @method initSearch
  **/
 -( void ) initSearch
 {
-    NSLog(@"Seach init.");
+    //NSLog(@"Seach init.");
 }
 
 /** **/
@@ -367,7 +372,7 @@
         /* Location services are not enabled.
          Take appropriate action: for instance, prompt the
          user to enable the location services */
-        NSLog(@"Location services are not enabled");
+        //NSLog(@"Location services are not enabled");
     }
 
 }
@@ -411,25 +416,32 @@
     }];
 }
 
-
-//// this delegate method is called if an error occurs in locating your current location
-//- (void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error
-//{
-//    NSLog(@"locationManager:%@ didFailWithError:%@", manager, error);
-//}
-//
-//// this delegate is called when the reverseGeocoder finds a placemark
-//- (void)reverseGeocoder:(CLGeocoder *)geocoder didFindPlacemark:(MKPlacemark *)placemark
-//{
-//    MKPlacemark * myPlacemark = placemark;
-//    // with the placemark you can now retrieve the city name
-//    NSString *city = [myPlacemark.addressDictionary objectForKey:(NSString*) kABPersonAddressCityKey];
-//}
-//
-//// this delegate is called when the reversegeocoder fails to find a placemark
-//- (void)reverseGeocoder:(CLGeocoder *)geocoder didFailWithError:(NSError *)error
-//{
-//    NSLog(@"reverseGeocoder:%@ didFailWithError:%@", geocoder, error);
-//}
+/** **/
++( NSString *) parseTime:( int ) mins;
+{
+    int hour = mins / 60;
+    int min = mins % 60;
+    int num_seconds = mins * 60;
+    
+    int days = num_seconds / (60 * 60 * 24);
+    num_seconds -= days * (60 * 60 * 24);
+    int hours = num_seconds / (60 * 60);
+    num_seconds -= hours * (60 * 60);
+    int minutes = num_seconds / 60;
+    
+    NSString *timeString = [NSString stringWithFormat:@"%i Mins", mins];
+    
+    if( mins > 60 )
+    {
+        timeString = [NSString stringWithFormat: @"%d Hrs %02d Mins", hours, min];
+        
+        if( hour > 24 )
+        {
+            timeString = [NSString stringWithFormat: @"%d Day %d Hrs %02d Mins", days, hours, minutes];
+        }
+    }
+    
+    return timeString;
+}
 
 @end

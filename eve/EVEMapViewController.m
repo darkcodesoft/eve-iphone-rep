@@ -9,7 +9,7 @@ const float filterViewHeight = 0;
 static NSString *CellID = @"menu-table-cell";
 
 #import "EVEMapViewController.h"
-#import "EVEItemViewController.h"
+#import "EVEDetailViewController.h"
 #import "EVEUtils.h"
 #import "EVEAnnotation.h"
 #import "EVEMapSwitch.h"
@@ -53,6 +53,7 @@ static NSString *CellID = @"menu-table-cell";
     // Do any additional setup after loading the view from its nib.
     
     self.Utils = [EVEUtils new];
+    [self drawMap];
     [self initLocationManager];
     [self startTrackingUser];
     [self initConfig];
@@ -264,7 +265,9 @@ static NSString *CellID = @"menu-table-cell";
     }];
 }
 
-/** **/
+/** 
+ *
+**/
 -( void ) setAnnotations
 {
     for ( int i = 0; i < self.collection.count; i++ )
@@ -374,17 +377,17 @@ static NSString *CellID = @"menu-table-cell";
     }
 }
 
-
-/** **/
--( void ) mapViewDidFinishRenderingMap:(MKMapView *)mapView fullyRendered:(BOOL)fullyRendered
-{
-
-}
-
-/** **/
--( void ) mapViewDidFinishLoadingMap:(MKMapView *)mapView{
-
-}
+//
+///** **/
+//-( void ) mapViewDidFinishRenderingMap:(MKMapView *)mapView fullyRendered:(BOOL)fullyRendered
+//{
+//
+//}
+//
+///** **/
+//-( void ) mapViewDidFinishLoadingMap:(MKMapView *)mapView{
+//
+//}
 
 /** 
  * @desc Use of custom annotation
@@ -425,7 +428,7 @@ static NSString *CellID = @"menu-table-cell";
         // Create the next view controller.
         EVEAnnotation *viewAnno = view.annotation;
         
-        EVEItemViewController *itemViewController = [[EVEItemViewController alloc] init];
+        EVEDetailViewController *itemViewController = [[EVEDetailViewController alloc] init];
         [itemViewController applyConfig: viewAnno.config];
         // Pass the selected object to the new view controller....
         
@@ -490,7 +493,7 @@ static NSString *CellID = @"menu-table-cell";
     MKDirections *directionss = [[MKDirections alloc] initWithRequest:request];
     [directionss calculateDirectionsWithCompletionHandler:^(MKDirectionsResponse *response, NSError *error) {
         MKRoute *route = [response.routes firstObject];
-        self.subHeader.text = [NSString stringWithFormat:@"%0.1f Miles Away", ceil(route.distance/1609.344)];
+        self.subHeader.text = [NSString stringWithFormat:@"%i Miles", (int)ceil(route.distance/1609.344)];
     }];
 }
 
@@ -629,8 +632,8 @@ static NSString *CellID = @"menu-table-cell";
 /** **/
 -(void) viewWillAppear:(BOOL)animated
 {
-    [self drawMap];
-    [self startTrackingUser];
+//    [self drawMap];
+//    [self startTrackingUser];
 }
 
 /** **/

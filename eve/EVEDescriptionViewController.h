@@ -13,4 +13,5 @@
 @property (nonatomic, strong) NSString *subHeadline;
 @property (nonatomic, strong) NSString *note;
 @property (nonatomic, strong) NSString *body;
+@property (nonatomic, strong) id delegate;
 @end

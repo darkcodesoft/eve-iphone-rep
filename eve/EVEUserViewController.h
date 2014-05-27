@@ -10,4 +10,5 @@
 
 @interface EVEUserViewController : UIViewController
 @property (nonatomic, strong) id delegate;
+
 @end
