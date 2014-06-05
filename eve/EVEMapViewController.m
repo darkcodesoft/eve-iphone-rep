@@ -21,7 +21,7 @@ static NSString *CellID = @"menu-table-cell";
 @property (nonatomic, strong) UILabel *header;
 @property (nonatomic, strong) UILabel *subHeader;
 @property (nonatomic, strong) CLLocationManager *locationManager;
-@property (nonatomic, strong) NSArray *menu;
+@property (nonatomic, strong) NSArray *filters;
 @property (nonatomic, weak) IBOutlet UISegmentedControl *dateControl;
 @property (nonatomic, weak) IBOutlet UIScrollView *dateControlScroll;
 @property (nonatomic, weak) IBOutlet UIView *dateControlView;
@@ -36,8 +36,26 @@ static NSString *CellID = @"menu-table-cell";
 @property (nonatomic, weak) IBOutlet UIButton *localizeButton;
 @property (nonatomic, weak) IBOutlet UIView *localizeViewWrap;
 @property (nonatomic, weak) IBOutlet UISegmentedControl *timeControl;
+@property (nonatomic, weak) IBOutlet UIView *screen;
+@property (nonatomic, weak) IBOutlet UIActivityIndicatorView *spinner;
+
+@property (nonatomic, weak) IBOutlet UIView *distanceWrap;
+@property (nonatomic, weak) IBOutlet UIImageView *distanceIcon;
+@property (nonatomic, weak) IBOutlet UILabel *distanceLabel;
+
+@property (nonatomic, weak) IBOutlet UILabel *distanceLabel2;
+@property (nonatomic, weak) IBOutlet UISlider *distanceSlider;
+@property (nonatomic, weak) NSMutableArray *sliderValues;
+
 @property (nonatomic) BOOL filterOpen;
 @property (nonatomic) int set;
+@property (nonatomic) int limit;
+@property (nonatomic) int span;
+
+@property (nonatomic, strong) NSString *queryLat;
+@property (nonatomic, strong) NSString *queryLon;
+@property (nonatomic, strong) NSString *queryTime;
+@property (nonatomic ) int querySpan;
 
 -( IBAction )dateControlSelected:(id)sender;
 
@@ -56,10 +74,8 @@ static NSString *CellID = @"menu-table-cell";
     [self drawMap];
     [self initLocationManager];
     [self startTrackingUser];
-    [self initConfig];
     [self initTitleView];
-    [self setAnnotations];
-    [self.MapView addAnnotations:self.annotations];
+    [self initConfig];
     [self drawFilter];
     
     // init listeners
@@ -69,24 +85,43 @@ static NSString *CellID = @"menu-table-cell";
 /** **/
 -( void ) initConfig
 {
-    // get feed
-    self.set = 1;
+    self.limit = 200;
+    self.span = 5000;
     
-    NSMutableDictionary *config =[[NSMutableDictionary alloc] init];
-    [config setValue:[[self.Utils.Defaults objectForKey:@"userAddress"] valueForKey:@"State"] forKey:@"region"];
-    [config setValue:[[self.Utils.Defaults objectForKey:@"userAddress"] valueForKey:@"Country"] forKey:@"country"];
-    [config setValue:[self.Utils dateStringToUTC:[NSString stringWithFormat:@"%@", [NSDate date]]] forKey:@"startTime"];
-    self.feed = [self.Utils getFeedWithConfig:config];
+    [self.spinner startAnimating];
+    [self.spinner setAlpha:1];
     
-    [self getFeed:self.feed page:self.set];
+    // distance slider
+    [self initDistanceSlider];
     
-    // add button
-    UIBarButtonItem *addButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCompose target:self action:@selector(initPostController)];
-    self.navigationItem.rightBarButtonItem = addButton;
+    [self setQueryTime:[self.Utils formatDate:[NSDate date] pattern:@"yyyyMMddHHmmss" ]];
+    [self setQuerySpan:10];
+    self.distanceSlider.value = self.querySpan;
+    [self.distanceLabel2 setText:[NSString stringWithFormat:@"%i Miles", self.querySpan]];
 
     // filterbutton
     UIBarButtonItem *filterButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemSearch target:self action:@selector(toggleFilter)];
-    self.navigationItem.leftBarButtonItem = filterButton;
+    self.navigationItem.rightBarButtonItem = filterButton;
+}
+
+/** **/
+- (void)valueChanged:(UISlider*)sender
+{
+    int value = ( int )roundf( self.distanceSlider.value );
+    [self.distanceLabel2 setText:[NSString stringWithFormat:@"%i %@", value, value < 2 ? @"Mile" : @"Miles"]];
+    [self setQuerySpan:value];
+    
+    NSLog(@"%i", self.querySpan);
+}
+
+/** **/
+-( void ) initDistanceSlider
+{
+    [self.distanceSlider addTarget:self
+                            action:@selector(valueChanged:)
+                  forControlEvents:UIControlEventValueChanged];
+    
+    [self.distanceSlider setMaximumTrackTintColor:[UIColor colorWithRed:0 green:0 blue:0 alpha:0.15]];
 }
 
 /** **/
@@ -129,6 +164,39 @@ static NSString *CellID = @"menu-table-cell";
 {
     UITapGestureRecognizer *descTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(startTrackingUser)];
     [self.localizeViewWrap addGestureRecognizer:descTap];
+    
+    UITapGestureRecognizer *titleViewTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(titleViewToggleFilter)];
+    [self.titleView addGestureRecognizer:titleViewTap];
+}
+
+/** **/
+-( void ) showDistanceView:(NSString *) distance
+{
+    [self.distanceLabel setText:distance];
+    
+    [UIView animateWithDuration:.6 delay:0.0 usingSpringWithDamping:.8 initialSpringVelocity:0.0 options:0 animations:^{
+        [self.distanceWrap setAlpha:1];
+    } completion:nil];
+}
+
+/** **/
+-( void ) hideDistanceView
+{
+    [UIView animateWithDuration:.6 delay:0.0 usingSpringWithDamping:.8 initialSpringVelocity:0.0 options:0 animations:^{
+        [self.distanceWrap setAlpha:0];
+    } completion:nil];
+}
+
+/** **/
+-( void ) drawDistanceView
+{
+    UIImage *image = [UIImage imageNamed:@"815-car-selected"];
+    self.distanceIcon.image = [image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+    [self.distanceIcon setTintColor:[self.Utils.theme valueForKey:@"themeColor"]];
+    
+    self.distanceWrap.layer.cornerRadius = 5;
+    self.distanceWrap.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:.75];
+    self.distanceLabel.textColor = [self.Utils.theme valueForKey:@"themeColor"];
 }
 
 /** **/
@@ -152,6 +220,7 @@ static NSString *CellID = @"menu-table-cell";
     self.MapView.showsUserLocation = YES;
     [self.MapView setDelegate:self];
     [self drawLocalizeButton];
+    [self drawDistanceView];
 }
 
 /** **/
@@ -160,37 +229,16 @@ static NSString *CellID = @"menu-table-cell";
     self.filterOpen = NO;
     self.filterView.clipsToBounds = YES;
     [self.filterView setHidden:YES];
-    
-    self.dateControl.tintColor = [self.Utils.theme valueForKey:@"themeColor"];
+
     self.dateControlScroll.contentSize = CGSizeMake( self.dateControl.bounds.size.width + 31, 40 );
     
-    CAGradientLayer *alphaGradientLayer = [CAGradientLayer layer];
-    NSArray *colors = [NSArray arrayWithObjects:
-                       (id)[[UIColor colorWithWhite:0 alpha:0] CGColor],
-                       (id)[[UIColor colorWithWhite:0 alpha:1] CGColor],
-                       nil];
+    NSMutableDictionary *paid = [[NSMutableDictionary alloc] initWithDictionary:@{@"label" : @"Paid", @"id": @"paid", @"tags": @"paid", @"enable" : @YES}];
+    NSMutableDictionary *ent = [[NSMutableDictionary alloc] initWithDictionary:@{@"label" : @"Entertainment", @"id": @"ent", @"tags": @"ent", @"enable" : @YES}];
+    NSMutableDictionary *biz = [[NSMutableDictionary alloc] initWithDictionary:@{@"label" : @"Business", @"id": @"biz", @"tags": @"biz", @"enable" : @YES}];
+    NSMutableDictionary *com = [[NSMutableDictionary alloc] initWithDictionary:@{@"label" : @"Community", @"id": @"com", @"tags": @"com", @"enable" : @YES}];
+    NSMutableDictionary *edu = [[NSMutableDictionary alloc] initWithDictionary:@{@"label" : @"Education", @"id": @"edu", @"tags": @"edu", @"enable" : @YES}];
     
-    [alphaGradientLayer setColors:colors];
-    // Start the gradient at the bottom and go almost half way up.
-    [alphaGradientLayer setStartPoint:CGPointMake(0, 1)];
-    [alphaGradientLayer setEndPoint:CGPointMake(0, 0.75)];
-    [alphaGradientLayer setFrame:[self.menuList frame]];
-    [[self.menuListView layer] setMask:alphaGradientLayer];
-    
-    NSArray *menuArray = [NSArray arrayWithObjects:
-                @{@"label" : @"Fashion", @"id": @"fashion", @"tags": @"fashion"},
-                @{@"label" : @"Arts", @"id": @"arts", @"tags": @"arts, museum, performance"},
-                @{@"label" : @"Party", @"id": @"party", @"tags": @"party, pool"},
-                @{@"label" : @"Class", @"id": @"class", @"tags": @"class"},
-                @{@"label" : @"Community", @"id": @"commnunity", @"tags" : @"park, block, neighborhood, community"},
-                @{@"label" : @"Nighlife", @"id": @"nightlife", @"tags": @"club"},
-                @{@"label" : @"Dance", @"id": @"dance", @"tags": @"dance"},
-                @{@"label" : @"Concert", @"id": @"concert", @"tags": @"music, performance"},
-                nil];
-    
-    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"label" ascending:YES];
-    NSArray *sortDescriptors = [NSArray arrayWithObject:sortDescriptor];
-    self.menu = [menuArray sortedArrayUsingDescriptors:sortDescriptors];
+    self.filters = [NSArray arrayWithObjects: paid, ent, biz, com, edu, nil];
 }
 
 /** **/
@@ -201,17 +249,23 @@ static NSString *CellID = @"menu-table-cell";
 }
 
 /** **/
+-( void ) titleViewToggleFilter
+{
+    [self.titleView setAlpha:0.1];
+    [UIView animateWithDuration:1.5 delay:0.0 usingSpringWithDamping:.8 initialSpringVelocity:0.0 options:0 animations:^{
+        //Animations
+        [self.titleView setAlpha:1.0];
+    } completion:^(BOOL finished) {
+        //Completion Block
+    }];
+    [self toggleFilter];
+}
+
+/** **/
 -( void ) hideFilter
 {
     self.filterOpen = NO;
     CGRect frame = [self.filterView frame];
-    
-    // hide annos
-    for( EVEAnnotation *anno in [self.MapView annotations])
-    {
-        [[self.MapView viewForAnnotation:anno] setAlpha:0];
-        [[self.MapView viewForAnnotation:anno] setHidden:NO];
-    }
     
     frame.origin.y = - self.filterView.frame.size.height + filterViewHeight;
     
@@ -222,16 +276,24 @@ static NSString *CellID = @"menu-table-cell";
         //Completion Block
         [self.filterView setHidden:YES];
         
-        for( EVEAnnotation *anno in [self.MapView annotations])
-        {
-            [UIView animateWithDuration:.3 delay:0.0 usingSpringWithDamping:.8 initialSpringVelocity:0.0 options:0 animations:^{
-                //Animations
-                [self.filterView setFrame:frame];
-                [[self.MapView viewForAnnotation:anno] setAlpha:1];
-            } completion:^(BOOL finished) {
-                //Completion Block
-            }];
+        NSString *feed = [[NSString alloc] initWithFormat:@"/api/q?geo=true&lat=%@&long=%@&time=%@&limit=%i&span=%i", self.queryLat, self.queryLon, self.queryTime, self.limit, self.querySpan];
+        @try {
+            
+            [self.filterView setFrame:frame];
+            self.collection = [self.Utils getCollectionforFeed:feed];
+            
+            NSLog(@"Length: %i", [self.collection count]);
+            
+            [self setAnnotations];
         }
+        @catch (NSException *exception) {
+            NSLog(@"Error");
+            [EVEUtils alert:@"Server unreachable." message:nil delegate:self];
+        }
+        @finally {
+            nil;
+        }
+        
     }];
 }
 
@@ -244,6 +306,7 @@ static NSString *CellID = @"menu-table-cell";
     frame.origin.y = filterViewHeight;
     [self.filterView setHidden:NO];
     [self.MapView removeOverlays:[self.MapView overlays]];
+    [self hideDistanceView];
     
     [UIView animateWithDuration:.8 delay:0.0 usingSpringWithDamping:.8 initialSpringVelocity:0.0 options:0 animations:^{
         //Animations
@@ -251,16 +314,23 @@ static NSString *CellID = @"menu-table-cell";
     } completion:^(BOOL finished) {
         //Completion Block
         [self.filterView setHidden:NO];
+        [self.filterView setFrame:frame];
+        self.querySpan = self.distanceSlider.value;
+        self.queryTime = self.queryTime ? self.queryTime : @"";
+        
         for( EVEAnnotation *anno in [self.MapView annotations])
         {
-            [UIView animateWithDuration:.3 delay:0.0 usingSpringWithDamping:.8 initialSpringVelocity:0.0 options:0 animations:^{
-                //Animations
-                [self.filterView setFrame:frame];
-                [[self.MapView viewForAnnotation:anno] setAlpha:0];
-            } completion:^(BOOL finished) {
-                //Completion Block
-                [[self.MapView viewForAnnotation:anno] setHidden:YES];
-            }];
+            if( [anno isKindOfClass:[EVEAnnotation class]] )
+            {
+                [UIView animateWithDuration:.3 delay:0.0 usingSpringWithDamping:.8 initialSpringVelocity:0.0 options:0 animations:^{
+                    //Animations
+                    [self.filterView setFrame:frame];
+                    [[self.MapView viewForAnnotation:anno] setAlpha:0];
+                } completion:^(BOOL finished) {
+                    //Completion Block
+                    [[self.MapView viewForAnnotation:anno] setHidden:YES];
+                }];
+            }
         }
     }];
 }
@@ -277,29 +347,124 @@ static NSString *CellID = @"menu-table-cell";
         EVEAnnotation *annotation =[[EVEAnnotation alloc] initWithTitle:[object valueForKey:@"name"] subTitle:[self.Utils parseUTCDate:[object valueForKey:@"startTime"] pattern:@"EEEE MMM d @ h:mm a"] location:location];
         annotation.config = object;
         [self.MapView addAnnotation: annotation];
+//        [self addAnnotation:annotation];
     }
+}
+
+-( void ) addAnnotation:(EVEAnnotation *)annotation
+{
+    if( [self annotationIsEnable:annotation] ) [self.MapView addAnnotation: annotation];
+}
+
+-( bool ) annotationIsEnable:(EVEAnnotation *)annotation
+{
+    if( [self applyFilters:annotation] ) return YES;
+    else return NO;
+}
+
+/** **/
+-( bool ) applyFilters:(EVEAnnotation *)anno
+{
+    bool status = NO;
+    for( NSMutableDictionary *filter in self.filters )
+    {
+        NSString *tag = [filter valueForKey:@"tags"];
+        bool isEnable = [filter valueForKey:@"enable"];
+        NSString *match = [NSString new];
+        
+        int count = 0;
+//        
+//        for( EVEAnnotation *anno in self.MapView.annotations )
+//        {
+//            count++;
+        
+            NSLog(@"%@", anno);
+        
+            bool (^selectedCase)() = @{
+                                      @"paid" : ^{
+                                          //NSLog(@"paid");
+                                      },
+                                      @"ent" : ^{
+                                          //NSLog(@"ent");
+                                      },
+                                      @"biz" : ^{
+                                          [self applyBizFilterToAnnoTation:anno indexPath:count];
+                                          //NSLog(@"biz");
+                                      },
+                                      @"com" : ^{
+                                          //NSLog(@"com");
+                                      },
+                                      @"edu" : ^{
+                                          //NSLog(@"edu");
+                                      },
+                                      }[tag];
+            
+            if (selectedCase != nil) status = selectedCase();
+//        }
+    }
+    
+    return status;
+}
+
+/** **/
+-( bool ) applyBizFilterToAnnoTation:(EVEAnnotation *) annotation indexPath:(int) path
+{
+    EVEAnnotation *anno = [self.MapView.annotations objectAtIndex:path-1];
+    
+    bool isEnable = [(NSMutableDictionary *)[self.filters objectAtIndex:path] valueForKey:@"enable"];
+    NSString *pool = [[[anno.config valueForKey:@"tags"] componentsJoinedByString:@", "] lowercaseString];
+    NSArray *matches = @[@"business",
+                         @"class",
+                         @"party",
+                         ];
+    
+//    NSLog(@"%@", (NSMutableDictionary *)[self.filters objectAtIndex:path]);
+//    NSLog(@"%@", anno.config);
+    
+    
+    for( NSString *match in matches )
+    {
+        if( [pool rangeOfString:match].location != NSNotFound )
+        {
+//            [[self.MapView viewForAnnotation:anno] setHidden:isEnable]; // bug
+//            NSLog(@"%@", [self.MapView viewForAnnotation:anno]);
+//            NSLog(@"%d", isEnable);
+//            NSLog(@"%@", annotation.config);
+//            int64_t delayInSeconds = 1.0f;
+//            
+//            dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);
+//            
+//            dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+                [[self.MapView viewForAnnotation:annotation] setHidden:isEnable]; // bug
+                NSLog(@"%@", [self.MapView viewForAnnotation:annotation]);
+                NSLog(@"%d", isEnable);
+                NSLog(@"%@", annotation.config);
+//            });
+        }
+    }
+    
+    return isEnable;
 }
 
 /**
  * @desc set collection for feed
  * @method getFeed:page:
  **/
--( void ) getFeed:( NSString *)feedPath page:(int) pageParam
+-( void ) getFeed
 {
-    self.collection = [self.Utils getCollectionforFeed:[[NSString alloc] initWithFormat:@"%@%i", feedPath, pageParam]];
-    
-    __block EVEMapViewController *sself = self;
-    
-    self.Utils.reach.reachableBlock = ^(Reachability*reach)
-    {
-        [sself getFeed:feedPath page:pageParam];
-        [sself startTrackingUser];
-        [sself setAnnotations];
-        [sself.MapView addAnnotations:sself.annotations];
-        NSLog(@"...REACHABLE!");
-    };
-    
-    [self.Utils.reach startNotifier];
+    NSString *feed = [[NSString alloc] initWithFormat:@"/api/q?geo=true&lat=%@&long=%@&time=%@&limit=%i&span=%i", self.queryLat, self.queryLon, self.queryTime, self.limit, self.querySpan];
+    @try {
+        [self.MapView removeAnnotations:[self.MapView annotations]];
+        self.collection = [self.Utils getCollectionforFeed:feed];
+        [self setAnnotations];
+    }
+    @catch (NSException *exception) {
+        NSLog(@"Error");
+        [EVEUtils alert:@"Server unreachable." message:nil delegate:self];
+    }
+    @finally {
+        nil;
+    }
 }
 
 /** **/
@@ -315,8 +480,8 @@ static NSString *CellID = @"menu-table-cell";
     CLGeocoder *geocoder = [[CLGeocoder alloc] init];
     CLLocation *location = [locations lastObject];
     CLLocationCoordinate2D location2d = CLLocationCoordinate2DMake(location.coordinate.latitude, location.coordinate.longitude);
-    MKCoordinateRegion region = MKCoordinateRegionMakeWithDistance(location2d, 5000, 5000);
-    
+    MKCoordinateRegion region = MKCoordinateRegionMakeWithDistance(location2d, self.span, self.span);
+    [self.MapView removeAnnotations:[self.MapView annotations]];
     [self.MapView setRegion:region animated:YES];
     
     [geocoder reverseGeocodeLocation:location completionHandler:^(NSArray *placemarks, NSError *error) {
@@ -329,6 +494,17 @@ static NSString *CellID = @"menu-table-cell";
             
             [self.locationManager stopUpdatingLocation];
             
+            int64_t delayInSeconds = 1.0f;
+            
+            dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);
+            
+            dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+                self.queryLat = [[self.Utils.Defaults objectForKey:@"userLocation"] valueForKey:@"latitude"];
+                self.queryLon = [[self.Utils.Defaults objectForKey:@"userLocation"] valueForKey:@"longitude"];
+                [self getFeed];
+                [self.MapView addAnnotations:self.annotations];
+            });
+            
             NSMutableDictionary *locationDictionary = [[NSMutableDictionary alloc] init];
             NSNumber *lat = [NSNumber numberWithDouble:location.coordinate.latitude];
             NSNumber *lon = [NSNumber numberWithDouble:location.coordinate.longitude];
@@ -336,7 +512,6 @@ static NSString *CellID = @"menu-table-cell";
             [locationDictionary setValue:lat forKeyPath:@"latitude"];
             [locationDictionary setValue:lon forKey:@"longitude"];
             [self.Utils.Defaults setValue:locationDictionary forKey:@"userLocation"];
-            
             [self setTitleViewLabel];
         }
     }];
@@ -379,10 +554,14 @@ static NSString *CellID = @"menu-table-cell";
 
 //
 ///** **/
-//-( void ) mapViewDidFinishRenderingMap:(MKMapView *)mapView fullyRendered:(BOOL)fullyRendered
-//{
-//
-//}
+-( void ) mapViewDidFinishRenderingMap:(MKMapView *)mapView fullyRendered:(BOOL)fullyRendered
+{
+    //NSLog(@"rendered.");
+    [self.spinner stopAnimating];
+    [UIView animateWithDuration:.6 delay:1.0 usingSpringWithDamping:.8 initialSpringVelocity:0.0 options:0 animations:^{
+        [self.screen setAlpha:0];
+    } completion:nil];
+}
 //
 ///** **/
 //-( void ) mapViewDidFinishLoadingMap:(MKMapView *)mapView{
@@ -423,7 +602,6 @@ static NSString *CellID = @"menu-table-cell";
 {
     if ([view.annotation isKindOfClass:[EVEAnnotation class]])
     {
-        //NSDictionary *attributes = (NSDictionary *)[self.collection objectAtIndex:indexPath.row];
         // Navigation logic may go here, for example:
         // Create the next view controller.
         EVEAnnotation *viewAnno = view.annotation;
@@ -462,7 +640,7 @@ static NSString *CellID = @"menu-table-cell";
     if ([annotationView.annotation isKindOfClass:[EVEAnnotation class]])
     {
         [mapView removeOverlays:[mapView overlays]];
-        self.subHeader.text = [NSString stringWithFormat:@"%@, %@", [[self.Utils.Defaults objectForKey:@"userAddress"] objectForKey:@"City"], [[self.Utils.Defaults objectForKey:@"userAddress"] objectForKey:@"State"]];
+        [self hideDistanceView];
     }
 }
 
@@ -489,11 +667,17 @@ static NSString *CellID = @"menu-table-cell";
             [self.MapView addOverlay:route.polyline level:MKOverlayLevelAboveRoads];
         }
     }];
-    
+
+    // calculate ETA
     MKDirections *directionss = [[MKDirections alloc] initWithRequest:request];
-    [directionss calculateDirectionsWithCompletionHandler:^(MKDirectionsResponse *response, NSError *error) {
-        MKRoute *route = [response.routes firstObject];
-        self.subHeader.text = [NSString stringWithFormat:@"%i Miles", (int)ceil(route.distance/1609.344)];
+    [directionss calculateETAWithCompletionHandler:^(MKETAResponse *response, NSError *error) {
+        
+        int res = (int)ceil(response.expectedTravelTime/60.0);
+        NSString *eta = @"UNAVAILABLE";
+        
+        if( res > 0 ) eta = [[EVEUtils parseTime:res] uppercaseString];
+
+        [self showDistanceView:eta];
     }];
 }
 
@@ -534,8 +718,8 @@ static NSString *CellID = @"menu-table-cell";
 /** **/
 -(void)setQueryStartTimeTo:(NSDate *)date
 {
-    //NSLog(@"%@",   date);
-    //@todo
+    [self setQueryTime:[self.Utils formatDate:date pattern:@"yyyyMMddHHmmss" ]];
+    NSLog(@"%@",   self.queryTime);
 }
 
 /** **/
@@ -549,7 +733,7 @@ static NSString *CellID = @"menu-table-cell";
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     // Return the number of rows in the section.
-    return [self.menu count];
+    return [self.filters count];
 }
 
 /** **/
@@ -562,7 +746,7 @@ static NSString *CellID = @"menu-table-cell";
     {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:[NSString stringWithFormat:@"%@-%i", CellID, [indexPath row]]];
         
-        NSDictionary *model = (NSDictionary *)[self.menu objectAtIndex:indexPath.row];
+        NSDictionary *model = (NSDictionary *)[self.filters objectAtIndex:indexPath.row];
         UIView *selectedBackgroundViewForCell = [UIView new];
         [selectedBackgroundViewForCell setBackgroundColor:[UIColor colorWithRed:0 green:0 blue:0 alpha:.05]];
         cell.selectedBackgroundView = selectedBackgroundViewForCell;
@@ -588,26 +772,28 @@ static NSString *CellID = @"menu-table-cell";
 {
     EVEMapSwitch *togg = (EVEMapSwitch *)sender;
     NSDictionary *model = togg.model;
-    NSString *cat = [model valueForKey:@"id"];
+    int index = togg.tag-1;
     NSString *tags = [model valueForKey:@"tags"];
     
-    NSLog(@"%@", cat);
+
     NSLog(@"%@", tags);
+    NSLog(@"%i", togg.tag);
+    NSLog(@"%d", [sender isOn]);
+    NSLog(@"%i", index);
     
-    for( EVEAnnotation *ann in [self.MapView annotations] )
-    {
-        if( [ann isKindOfClass:[EVEAnnotation class]] )
-        {
-            NSDictionary *config = ann.config;
-            if( [[config objectForKey:@"tags"] indexOfObject:[model valueForKey:@"tags"]] )
-            {
-                // do your thing with matching objects here
-                // NSLog(@"%@", config);
-            }
-        }
+    
+    @try {
+        if([sender isOn]) [(NSMutableDictionary *)[self.filters objectAtIndex:index] setValue:@YES forKey:@"enable"];
+        else [(NSMutableDictionary *)[self.filters objectAtIndex:index] setValue:@NO forKey:@"enable"];
+        
+         NSLog(@"%@", [self.filters objectAtIndex:index] );
     }
-    
-    // NSLog(@"%@", model);
+    @catch (NSException *exception) {
+        NSLog(@"%@", exception);
+    }
+    @finally {
+        nil;
+    }
 }
 
 /** **/
@@ -632,8 +818,7 @@ static NSString *CellID = @"menu-table-cell";
 /** **/
 -(void) viewWillAppear:(BOOL)animated
 {
-//    [self drawMap];
-//    [self startTrackingUser];
+//    [self refresh];
 }
 
 /** **/

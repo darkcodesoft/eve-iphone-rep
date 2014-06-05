@@ -10,5 +10,8 @@
 
 @interface EVEUserViewController : UIViewController
 @property (nonatomic, strong) id delegate;
+@property (nonatomic, weak) IBOutlet UITableView *calendarList;
+@property ( nonatomic, strong ) NSMutableArray *calendarItems;
 
+-( void ) retrieveModels;
 @end

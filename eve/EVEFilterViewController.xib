@@ -55,20 +55,21 @@
                                                         <segment title="This Weekend"/>
                                                         <segment title="From Date"/>
                                                     </segments>
-                                                    <color key="tintColor" red="0.1940713168" green="0.55216221740000004" blue="0.57075095659999997" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                     <connections>
                                                         <action selector="dateControlSelected:" destination="-1" eventType="valueChanged" id="vPU-II-0qV"/>
                                                     </connections>
                                                 </segmentedControl>
                                             </subviews>
+                                            <color key="backgroundColor" red="0.0" green="0.80000000000000004" blue="0.80000000000000004" alpha="1" colorSpace="calibratedRGB"/>
                                         </scrollView>
-                                        <view alpha="0.10000000000000001" contentMode="scaleToFill" id="BYy-Yh-gkh">
+                                        <view alpha="0.0" contentMode="scaleToFill" id="BYy-Yh-gkh">
                                             <rect key="frame" x="0.0" y="51" width="320" height="0.0"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                         </view>
                                     </subviews>
-                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    <color key="backgroundColor" red="0.0" green="0.80000000000000004" blue="0.80000000000000004" alpha="1" colorSpace="calibratedRGB"/>
                                 </view>
                                 <view autoresizesSubviews="NO" clipsSubviews="YES" contentMode="scaleToFill" id="6Uk-Bo-p4a">
                                     <rect key="frame" x="0.0" y="52" width="320" height="0.0"/>
@@ -108,6 +109,11 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
 </data>
                                             </timeZone>
                                         </datePicker>
+                                        <view alpha="0.10000000149011612" contentMode="scaleToFill" id="gt4-XR-ftN">
+                                            <rect key="frame" x="0.0" y="159" width="320" height="1"/>
+                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                            <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                        </view>
                                     </subviews>
                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </view>
@@ -130,14 +136,9 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                                         <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Keyword" minimumFontSize="17" clearButtonMode="always" id="1eh-4P-uS9" customClass="EVEFilterUITextField">
                                             <rect key="frame" x="20" y="15" width="280" height="30"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                            <fontDescription key="fontDescription" name="HelveticaNeue-Thin" family="Helvetica Neue" pointSize="18"/>
+                                            <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="18"/>
                                             <textInputTraits key="textInputTraits" autocapitalizationType="words"/>
                                         </textField>
-                                        <view alpha="0.10000000000000001" contentMode="scaleToFill" id="HFd-BR-d7W">
-                                            <rect key="frame" x="0.0" y="0.0" width="320" height="1"/>
-                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                            <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
-                                        </view>
                                     </subviews>
                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </view>
@@ -172,20 +173,21 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                                         <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="30" sectionHeaderHeight="22" sectionFooterHeight="22" id="Dfd-yr-0PR">
                                             <rect key="frame" x="0.0" y="-1" width="320" height="180"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                             <inset key="contentInset" minX="0.0" minY="1" maxX="0.0" maxY="66"/>
-                                            <color key="separatorColor" red="0.27612043110000001" green="0.7767302304" blue="0.79735331629999995" alpha="1" colorSpace="calibratedRGB"/>
+                                            <color key="separatorColor" red="0.0" green="0.68763508645533133" blue="0.68763508645533133" alpha="1" colorSpace="calibratedRGB"/>
                                             <connections>
                                                 <outlet property="dataSource" destination="-1" id="e7U-2r-twH"/>
                                                 <outlet property="delegate" destination="-1" id="Jlh-sY-lGG"/>
                                             </connections>
                                         </tableView>
-                                        <view alpha="0.050000000000000003" contentMode="scaleToFill" id="cMw-ES-14J">
-                                            <rect key="frame" x="0.0" y="0.0" width="320" height="2"/>
+                                        <view alpha="0.02" contentMode="scaleToFill" id="cMw-ES-14J">
+                                            <rect key="frame" x="0.0" y="-1" width="320" height="2"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                         </view>
                                     </subviews>
-                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    <color key="backgroundColor" red="0.0" green="0.80000000000000004" blue="0.80000000000000004" alpha="1" colorSpace="calibratedRGB"/>
                                 </view>
                                 <view contentMode="scaleToFill" id="qLy-6F-c6r">
                                     <rect key="frame" x="0.0" y="184" width="320" height="100"/>
@@ -194,10 +196,10 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="miI-NE-cE5">
                                             <rect key="frame" x="20" y="20" width="280" height="60"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                            <color key="backgroundColor" red="0.52151478380000005" green="0.69590643269999997" blue="0.40469980080000001" alpha="1" colorSpace="calibratedRGB"/>
+                                            <color key="backgroundColor" red="0.0" green="0.80000000000000004" blue="0.80000000000000004" alpha="1" colorSpace="calibratedRGB"/>
                                             <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="20"/>
                                             <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                            <state key="normal" title="Search">
+                                            <state key="normal" title="Done">
                                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                             </state>
                                         </button>

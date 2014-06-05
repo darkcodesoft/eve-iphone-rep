@@ -46,6 +46,7 @@
 		7DF4BDF718F1EFF500706ACB /* EVEAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = 7DF4BDF618F1EFF500706ACB /* EVEAnnotation.m */; };
 		9216C21119299B570038B88D /* EVEDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9216C20F19299B570038B88D /* EVEDetailViewController.m */; };
 		9216C21219299B570038B88D /* EVEDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9216C21019299B570038B88D /* EVEDetailViewController.xib */; };
+		9281795B19384C150071CA15 /* styles.css in Resources */ = {isa = PBXBuildFile; fileRef = 9281795A19384C150071CA15 /* styles.css */; };
 		92F1705D19337ECE00E83336 /* EVEWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 92F1705B19337ECE00E83336 /* EVEWebViewController.m */; };
 		92F1705E19337ECE00E83336 /* EVEWebViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 92F1705C19337ECE00E83336 /* EVEWebViewController.xib */; };
 		92FDC09D19313246005669CB /* EVEMapSwitch.m in Sources */ = {isa = PBXBuildFile; fileRef = 92FDC09C19313246005669CB /* EVEMapSwitch.m */; };
@@ -117,6 +118,7 @@
 		9216C20E19299B570038B88D /* EVEDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EVEDetailViewController.h; sourceTree = "<group>"; };
 		9216C20F19299B570038B88D /* EVEDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EVEDetailViewController.m; sourceTree = "<group>"; };
 		9216C21019299B570038B88D /* EVEDetailViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EVEDetailViewController.xib; sourceTree = "<group>"; };
+		9281795A19384C150071CA15 /* styles.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; path = styles.css; sourceTree = "<group>"; };
 		92F1705A19337ECE00E83336 /* EVEWebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EVEWebViewController.h; sourceTree = "<group>"; };
 		92F1705B19337ECE00E83336 /* EVEWebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EVEWebViewController.m; sourceTree = "<group>"; };
 		92F1705C19337ECE00E83336 /* EVEWebViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EVEWebViewController.xib; sourceTree = "<group>"; };
@@ -233,6 +235,7 @@
 				92F1705A19337ECE00E83336 /* EVEWebViewController.h */,
 				92F1705B19337ECE00E83336 /* EVEWebViewController.m */,
 				92F1705C19337ECE00E83336 /* EVEWebViewController.xib */,
+				9281795A19384C150071CA15 /* styles.css */,
 			);
 			path = eve;
 			sourceTree = "<group>";
@@ -357,6 +360,7 @@
 				7DC93CF21908BBC7007FF87B /* Images.xcassets in Resources */,
 				92F1705E19337ECE00E83336 /* EVEWebViewController.xib in Resources */,
 				7D28A24F18EE65A800A8A29B /* InfoPlist.strings in Resources */,
+				9281795B19384C150071CA15 /* styles.css in Resources */,
 				7DBF40B11900D4550006A154 /* EVEItemViewController.xib in Resources */,
 				7D6C7D4D18F7853A0030476D /* EVEFilterViewController.xib in Resources */,
 				7D17DDBB18EE786200D37C50 /* EVEMapViewController.xib in Resources */,

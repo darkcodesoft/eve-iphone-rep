@@ -12,11 +12,11 @@
 @property (nonatomic, strong) NSArray *collection;
 @property ( nonatomic, strong ) NSString *queryKeyword;
 @property ( nonatomic, strong ) NSString *queryTimestamp;
-@property ( nonatomic, strong ) NSDictionary *queryCity;
+@property ( nonatomic, strong ) NSMutableDictionary *queryCity;
 
--( void )getCollection;
+-( void )getCollection:(bool) reset;
 
 -( void )refreshCollection;
 
--( void )updateCollection:(NSDictionary *) config;
+-( void )updateCollection;
 @end

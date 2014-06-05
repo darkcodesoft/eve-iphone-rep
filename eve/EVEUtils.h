@@ -22,6 +22,7 @@
 @property (nonatomic, strong) Reachability *reach;
 @property (nonatomic) NetworkStatus *netStatus;
 @property (nonatomic) BOOL appIsOnline;
+@property (nonatomic, strong) NSArray *startupCollection;
 
 -( NSArray *) getCollectionforFeed:(NSString *) feedPath;
 
@@ -55,6 +56,10 @@
 
 -( NSDate *) utcToDate: ( NSString *) dateString;
 
--(int) eveIsOnline;
+- (bool) eveIsOnline;
+
+-( int ) notificationsLength;
+
++( void ) alert:(NSString *)title message:(NSString *)message delegate:(id)delegate;
 
 @end

@@ -2,7 +2,31 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="14b5c3ea-d8d9-4522-b192-f142757b2e09" name="Default" comment="">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/eve/styles.css" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/eve.xcodeproj/project.xcworkspace/xcuserdata/storm2910.xcuserdatad/UserInterfaceState.xcuserstate" afterPath="$PROJECT_DIR$/eve.xcodeproj/project.xcworkspace/xcuserdata/storm2910.xcuserdatad/UserInterfaceState.xcuserstate" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/eve.xcodeproj/project.xcworkspace/xcuserdata/tmoussignac.xcuserdatad/UserInterfaceState.xcuserstate" afterPath="$PROJECT_DIR$/eve.xcodeproj/project.xcworkspace/xcuserdata/tmoussignac.xcuserdatad/UserInterfaceState.xcuserstate" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/eve/EVEDescriptionViewController.h" afterPath="$PROJECT_DIR$/eve/EVEDescriptionViewController.h" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/eve/EVEDescriptionViewController.m" afterPath="$PROJECT_DIR$/eve/EVEDescriptionViewController.m" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/eve/EVEDescriptionViewController.xib" afterPath="$PROJECT_DIR$/eve/EVEDescriptionViewController.xib" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/eve/EVEDetailViewController.h" afterPath="$PROJECT_DIR$/eve/EVEDetailViewController.h" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/eve/EVEDetailViewController.m" afterPath="$PROJECT_DIR$/eve/EVEDetailViewController.m" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/eve/EVEDetailViewController.xib" afterPath="$PROJECT_DIR$/eve/EVEDetailViewController.xib" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/eve/EVEFilterViewController.m" afterPath="$PROJECT_DIR$/eve/EVEFilterViewController.m" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/eve/EVEFilterViewController.xib" afterPath="$PROJECT_DIR$/eve/EVEFilterViewController.xib" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/eve/EVEMapViewController.m" afterPath="$PROJECT_DIR$/eve/EVEMapViewController.m" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/eve/EVEMapViewController.xib" afterPath="$PROJECT_DIR$/eve/EVEMapViewController.xib" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/eve/EVETableViewController.h" afterPath="$PROJECT_DIR$/eve/EVETableViewController.h" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/eve/EVETableViewController.m" afterPath="$PROJECT_DIR$/eve/EVETableViewController.m" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/eve/EVEUserViewController.h" afterPath="$PROJECT_DIR$/eve/EVEUserViewController.h" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/eve/EVEUserViewController.m" afterPath="$PROJECT_DIR$/eve/EVEUserViewController.m" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/eve/EVEUserViewController.xib" afterPath="$PROJECT_DIR$/eve/EVEUserViewController.xib" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/eve/EVEUtils.h" afterPath="$PROJECT_DIR$/eve/EVEUtils.h" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/eve/EVEUtils.m" afterPath="$PROJECT_DIR$/eve/EVEUtils.m" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/eve/EVEWebViewController.m" afterPath="$PROJECT_DIR$/eve/EVEWebViewController.m" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/eve/EVEWebViewController.xib" afterPath="$PROJECT_DIR$/eve/EVEWebViewController.xib" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/eve/TPAppDelegate.m" afterPath="$PROJECT_DIR$/eve/TPAppDelegate.m" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/eve/eve.xcdatamodeld/eve.xcdatamodel/contents" afterPath="$PROJECT_DIR$/eve/eve.xcdatamodeld/eve.xcdatamodel/contents" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/eve.xcodeproj/project.pbxproj" afterPath="$PROJECT_DIR$/eve.xcodeproj/project.pbxproj" />
     </list>
     <ignored path="eve.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -24,17 +48,7 @@
     <favorites_list name="eve" />
   </component>
   <component name="FileEditorManager">
-    <leaf>
-      <file leaf-file-name="EVEAnnotation.h" pinned="false" current="true" current-in-tab="true">
-        <entry file="vcs:///Users/storm2910/Dropbox/Apps/iOS/eve/eve/EVEAnnotation.h">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="659">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-    </leaf>
+    <leaf />
   </component>
   <component name="FindManager">
     <FindUsagesManager>
@@ -79,7 +93,6 @@
       <sortByType />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -128,6 +141,7 @@
           </PATH>
         </subPane>
       </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -143,26 +157,18 @@
     <property name="FileHistory.git4idea.history.GitHistoryProvider_flatOrder1" value="1" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_flatOrder0" value="0" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_flatWidth2" value="218" />
-    <property name="FileHistory.git4idea.history.GitHistoryProvider_treeWidth3" value="1003" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_flatWidth3" value="1003" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_treeWidth3" value="1003" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_treeWidth2" value="218" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_treeWidth1" value="213" />
-    <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_flatOrder2" value="2" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_flatOrder3" value="3" />
     <property name="FullScreen" value="true" />
-    <property name="options.searchVisible" value="true" />
     <property name="options.splitter.details.proportions" value="0.2" />
+    <property name="options.searchVisible" value="true" />
   </component>
   <component name="RunManager">
-    <configuration default="true" type="DartUnitRunConfigurationType" factoryName="DartUnit">
-      <option name="VMOptions" />
-      <option name="arguments" />
-      <option name="filePath" />
-      <option name="scope" value="ALL" />
-      <option name="testName" />
-      <method />
-    </configuration>
     <configuration default="true" type="DartCommandLineRunConfigurationType" factoryName="Dart Command Line Application">
       <option name="VMOptions" />
       <option name="arguments" />
@@ -173,15 +179,23 @@
       <option name="showConsoleOnStdOut" value="false" />
       <method />
     </configuration>
+    <configuration default="true" type="DartUnitRunConfigurationType" factoryName="DartUnit">
+      <option name="VMOptions" />
+      <option name="arguments" />
+      <option name="filePath" />
+      <option name="scope" value="ALL" />
+      <option name="testName" />
+      <method />
+    </configuration>
+    <configuration default="true" type="JavaScriptTestRunnerKarma" factoryName="Karma" singleton="true" config-file="">
+      <envs />
+      <method />
+    </configuration>
     <configuration default="true" type="JSTestDriver:ConfigurationType" factoryName="JsTestDriver">
       <setting name="configLocationType" value="CONFIG_FILE" />
       <setting name="settingsFile" value="" />
       <setting name="serverType" value="INTERNAL" />
       <setting name="preferredDebugBrowser" value="CHROME" />
-      <method />
-    </configuration>
-    <configuration default="true" type="JavaScriptTestRunnerKarma" factoryName="Karma" singleton="true" config-file="">
-      <envs />
       <method />
     </configuration>
     <configuration default="true" type="JavascriptDebugType" factoryName="JavaScript Debug" singleton="true">
@@ -206,24 +220,24 @@
     <frame x="0" y="0" width="1680" height="1050" extended-state="0" />
     <editor active="false" />
     <layout>
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
-      <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
+      <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.24940476" sideWeight="0.68494517" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.24940476" sideWeight="0.68494517" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="true" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="true" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Version Control" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.31505483" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.31505483" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
   <component name="VcsContentAnnotationSettings">
@@ -241,16 +255,12 @@
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/eve/EVEFilterUITextField.m">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="18" column="1" selection-start="339" selection-end="339" vertical-scroll-proportion="-0.01972686" vertical-offset="301" max-vertical-offset="960">
-          <folding />
-        </state>
+        <state line="18" column="1" selection-start="339" selection-end="339" vertical-scroll-proportion="-0.01972686" vertical-offset="301" max-vertical-offset="960" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/eve/EVEFilterViewController.m">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="-1.8080496" vertical-offset="1168" max-vertical-offset="8320">
-          <folding />
-        </state>
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="-1.8080496" vertical-offset="1168" max-vertical-offset="8320" />
       </provider>
     </entry>
   </component>

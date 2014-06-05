@@ -57,6 +57,7 @@
     self.ListContainer.navigationBar.barStyle = UIBarStyleBlackTranslucent;
     [self.ListContainer.navigationBar setBarTintColor:[self.Utils.theme valueForKey:@"themeColor"]];
     self.ListContainer.navigationBar.tintColor = [self.Utils.theme valueForKey:@"menuFontColor"];
+    //self.ListContainer.navigationBar.tintColor = [self.Utils.theme valueForKey:@"themeColor"];
     
     self.Map.title = [[self.Utils.config valueForKey:@"MapConfig"] valueForKey:@"title"];
     UIImage *geoIcon = [UIImage imageNamed:@"geo"];
@@ -67,7 +68,7 @@
     self.MapContainer.navigationBar.tintColor = self.ListContainer.navigationBar.tintColor;
     
     self.User.title = [[self.Utils.config valueForKey:@"UserConfig"] valueForKey:@"title"];
-    UIImage *userIcon = [UIImage imageNamed:@"Contact"];
+    UIImage *userIcon = [UIImage imageNamed:@"851-calendar"];
     self.User.tabBarItem.image = userIcon;
     self.User.tabBarItem.selectedImage = userIcon;
     self.UserContainer.navigationBar.barStyle = self.ListContainer.navigationBar.barStyle;
@@ -79,6 +80,9 @@
     self.TabBar = [[UITabBarController alloc] init];
     self.TabBar.tabBar.tintColor = [UIColor colorWithRed:0.0/255.0 green:159.0/255.0 blue:195.0/255.0 alpha:1];
     self.TabBar.viewControllers = @[ self.ListContainer, self.MapContainer, self.UserContainer ];
+    
+    // badges
+    self.User.tabBarItem.badgeValue = [NSString stringWithFormat:@"%i", [self.Utils notificationsLength]];
     
     // window
     [self.window setRootViewController:self.TabBar];

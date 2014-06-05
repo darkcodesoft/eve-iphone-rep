@@ -47,10 +47,10 @@
  **/
 -( NSArray *) getCollectionforFeed:(NSString *)feedPath
 {
-    //NSLog(@"%@", self.server);
-    //NSLog(@"%@", feedPath);
+    NSLog(@"%@", self.server);
+    NSLog(@"%@", feedPath);
     NSArray *collection = [NSArray new];
-    NSString *CString = [[NSString alloc] initWithFormat:@"%@%@", self.server, feedPath];
+    NSString *CString = [[NSString alloc] initWithFormat:@"%@%@", self.server, [feedPath stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
     
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:CString]
                                                            cachePolicy:NSURLRequestReloadIgnoringLocalAndRemoteCacheData
@@ -71,15 +71,21 @@
         {
             NSArray *deserializedArray = jsonObject;
             collection = deserializedArray;
-            //NSLog(@"here...");
         }
         
         if([jsonObject isKindOfClass:[NSDictionary class]])
         {
-            NSDictionary *deserializedDictionary = jsonObject;
-            NSArray *deserializedArray = deserializedDictionary[@"results"];
-            collection = deserializedArray;
-            //NSLog(@"there....");
+            if( [jsonObject objectForKey:@"results"] )
+            {
+                NSDictionary *deserializedDictionary = jsonObject;
+                NSArray *deserializedArray = deserializedDictionary[@"results"];
+                collection = deserializedArray;
+            }
+            else
+            {
+                NSArray *result = [NSArray arrayWithObject:jsonObject];
+                collection = result;
+            }
         }
     }
     
@@ -88,9 +94,9 @@
         NSLog(@"Response is empty.");
     }
     
-    //NSLog(@"********************");
-    //NSLog(@"%i", [collection count]);
-    //NSLog(@"********************");
+    NSLog(@"********************");
+    NSLog(@"%i", [collection count]);
+    NSLog(@"********************");
     
     return collection;
 
@@ -187,64 +193,56 @@
  **/
 -( NSString *) getFeedWithConfig:(NSDictionary *)config
 {
-    NSString *feed = [[NSString alloc] init];
-    NSString *path = @"";
-    NSString *url = @"/api/q?";
-    NSString *city = [config valueForKey:@"city"];
-    NSString *region = [config valueForKey:@"region"];
-    NSString *country = [config valueForKey:@"country"];
-    NSString *venue = [config valueForKey:@"tags"];
-    NSString *keyword = [config valueForKey:@"name"];
-    //NSString *startTime = [config valueForKey:@"startTime"];
-    
-    // city
-    [self.Defaults setValue:city forKey:@"city"];
-    if( [[city stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]] length])
-    {
-        path = [path stringByAppendingString: [NSString stringWithFormat:@"&city=%@", [city stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]]]];
-    }
-    // region
-    [self.Defaults setValue:region forKey:@"region"];
-    if( [[region stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]] length])
-    {
-        path = [path stringByAppendingString: [NSString stringWithFormat:@"&region=%@", [region stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]]]];
-    }
-    // country
-    [self.Defaults setValue:country forKey:@"country"];
-    if( [[country stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]] length])
-    {
-        path = [path stringByAppendingString: [NSString stringWithFormat:@"&countryName=%@", [country stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]]]];
-    }
-    // venue
-    if( [[venue stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]] length])
-    {
-        path = [path stringByAppendingString: [NSString stringWithFormat:@"&tags=%@", [venue stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]]]];
-    }
-    // keyword
-    //[self.Defaults setValue:keyword forKey:@"name"];
-    if( [[keyword stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]] length])
-    {
-        path = [path stringByAppendingString: [NSString stringWithFormat:@"&name=%@", [keyword stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]]]];
-    }
-    // startTime
+//    NSString *feed = [[NSString alloc] init];
+//    NSString *path = @"";
+//    NSString *url = @"/api/q?";
+//    NSString *city = [config valueForKey:@"city"];
+//    NSString *region = [config valueForKey:@"region"];
+//    NSString *country = [config valueForKey:@"country"];
+//    NSString *keyword = [config valueForKey:@"keyword"];
+//    NSString *startTime = [config valueForKey:@"startTime"];
+//    // city
+//    [self.Defaults setValue:city forKey:@"city"];
+//    if( [[city stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]] length])
+//    {
+//        path = [path stringByAppendingString: [NSString stringWithFormat:@"&city=%@", [city stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]]]];
+//    }
+//    // region
+//    [self.Defaults setValue:region forKey:@"region"];
+//    if( [[region stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]] length])
+//    {
+//        path = [path stringByAppendingString: [NSString stringWithFormat:@"&region=%@", [region stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]]]];
+//    }
+//    // country
+//    [self.Defaults setValue:country forKey:@"country"];
+//    if( [[country stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]] length])
+//    {
+//        path = [path stringByAppendingString: [NSString stringWithFormat:@"&countryName=%@", [country stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]]]];
+//    }
+//    if( [[keyword stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]] length])
+//    {
+//        path = [path stringByAppendingString: [NSString stringWithFormat:@"&keyword=%@", [keyword stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]]]];
+//    }
+//    // startTime
 //    if([[startTime stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]] length])
 //    {
 //        path = [path stringByAppendingString: [NSString stringWithFormat:@"&startTime=%@", [startTime stringByReplacingCharactersInRange:NSMakeRange(10, 10) withString:@""]]];
 //    }
-
-    @try
-    {
-        path = [path stringByReplacingCharactersInRange:NSMakeRange(0, 1) withString:url];
-        feed = [[NSString stringWithFormat:@"%@&p=", path] stringByReplacingOccurrencesOfString:@" " withString:@"%20"];
-    }
-    @catch( NSException *e )
-    {
-        NSLog(@"%@", e);
-    }
-    @finally
-    {
-        return feed;
-    }
+//
+//    @try
+//    {
+//        path = [path stringByReplacingCharactersInRange:NSMakeRange(0, 1) withString:url];
+//        feed = [[NSString stringWithFormat:@"%@&p=", path] stringByReplacingOccurrencesOfString:@" " withString:@"%20"];
+//    }
+//    @catch( NSException *e )
+//    {
+//        NSLog(@"%@", e);
+//    }
+//    @finally
+//    {
+//        return feed;
+//    }
+    return @"";
 }
 
 /**
@@ -258,11 +256,11 @@
     
     // TableViewController config
     NSMutableDictionary *tableViewControllerConfig = [[NSMutableDictionary alloc] init];
-    [tableViewControllerConfig setValue:@"Finder" forKey:@"title"];
+    [tableViewControllerConfig setValue:@"Search" forKey:@"title"];
     
     // MapViewController config
     NSMutableDictionary *mapViewControllerConfig = [[NSMutableDictionary alloc] init];
-    [mapViewControllerConfig setValue:@"Pulse" forKey:@"title"];
+    [mapViewControllerConfig setValue:@"Nearby" forKey:@"title"];
     
     // PostViewController config
     NSMutableDictionary *PostViewControllerConfig = [[NSMutableDictionary alloc] init];
@@ -270,7 +268,7 @@
     
     // UserViewController config
     NSMutableDictionary *UserViewControllerConfig = [[NSMutableDictionary alloc] init];
-    [UserViewControllerConfig setValue:@"Me" forKey:@"title"];
+    [UserViewControllerConfig setValue:@"Calendar" forKey:@"title"];
     
     self.config = [[NSMutableDictionary alloc] init];
     [self.config setValue:tableViewControllerConfig forKey:@"ListConfig"];
@@ -286,44 +284,45 @@
     [self.theme setValue:[UIColor colorWithRed:0/255.0f green:204/255.0f blue:204/255.0f alpha:1.0f] forKey:@"themeColor"];
     [self.theme setValue:[UIColor whiteColor] forKey:@"menuFontColor"];
     
-    self.reach = [Reachability reachabilityWithHostname:@"http://tp-eve.aws.af.cm"];
+    //self.reach = [Reachability reachabilityWithHostname:self.server];
+    
+    self.reach = [Reachability reachabilityForInternetConnection];
     
     // notification
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(notificationHandler)
-                                                 name:@"UPost Event Reminder"
+                                                 name:@"Eve Event Reminder"
                                                object:nil];
     
 }
 
 -( void ) notificationHandler
 {
-    [EVEUserViewController updateNotification];
+    //[EVEUserViewController updateNotification];
 }
 
-- (int) eveIsOnline
+- (bool) eveIsOnline
 {
-    BOOL *res = NO;
-    NSURL *url = [NSURL URLWithString:@"http://tp-eve.aws.af.cm"];
-    NSURLRequest *request = [NSMutableURLRequest requestWithURL:url];
-    NSHTTPURLResponse *response = nil;
-    [NSURLConnection sendSynchronousRequest:request
-                          returningResponse:&response error:NULL];
+    bool res = NO;
     
-    if( response )
+    NetworkStatus network = [self.reach currentReachabilityStatus];
+    
+    if( network == NotReachable )
     {
-        res = (BOOL *)YES;
+        res = NO;
+        [self.reach startNotifier];
     }
     else
     {
-        [self.reach startNotifier];
+        res = YES;
     }
-    return ( response != nil );
+    
+    return res;
 }
 
 -( void ) netWorkErrorHandler
 {
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Ooops... " message:@"Network unvailable. Check your network then try again later." delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Ooops... Network unvailable." message:@"Check your network then try again later." delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
     
     dispatch_after(1.0f, dispatch_get_main_queue(), ^(void){
         [alert show];
@@ -442,6 +441,23 @@
     }
     
     return timeString;
+}
+
+/** **/
+-( int ) notificationsLength
+{
+    return 2;
+}
+
+/** **/
++( void ) alert:(NSString *)title message:(NSString *)message delegate:(id)delegate
+{
+    id del = delegate ? delegate : self;
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:title message:message delegate:del cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
+    
+    dispatch_after(1.0f, dispatch_get_main_queue(), ^(void){
+        [alert show];
+    });
 }
 
 @end

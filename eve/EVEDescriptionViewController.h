@@ -13,5 +13,6 @@
 @property (nonatomic, strong) NSString *subHeadline;
 @property (nonatomic, strong) NSString *note;
 @property (nonatomic, strong) NSString *body;
+@property (nonatomic, strong) NSString *html;
 @property (nonatomic, strong) id delegate;
 @end

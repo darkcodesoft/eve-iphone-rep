@@ -10,7 +10,8 @@
 
 @interface EVEWebViewController () <UIWebViewDelegate>
 @property ( nonatomic, weak ) IBOutlet UIWebView *webView;
-@property ( nonatomic, strong ) IBOutlet UIActivityIndicatorView *spinner;
+@property ( nonatomic, weak ) IBOutlet UIView *screen;
+@property ( nonatomic, weak ) IBOutlet UIActivityIndicatorView *spinner;
 @end
 
 @implementation EVEWebViewController
@@ -34,6 +35,7 @@
 
 -( void ) initConfig
 {
+    self.title = @"Tickets";
     [self.navigationController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor colorWithRed:0/255.0f green:204/255.0f blue:204/255.0f alpha:1.0f]}];
 
     UIBarButtonItem * closeButton = [[UIBarButtonItem alloc] initWithTitle:@"Close" style:UIBarButtonItemStylePlain target:self action:@selector(closeView)];
@@ -58,6 +60,9 @@
     } completion:^(BOOL finished) {
         //Completion Block
         [self.spinner stopAnimating];
+        [UIView animateWithDuration:.6 delay:0.3 usingSpringWithDamping:.8 initialSpringVelocity:0.0 options:0 animations:^{
+            [self.screen setAlpha:0];
+        } completion:nil];
     }];
 }
 

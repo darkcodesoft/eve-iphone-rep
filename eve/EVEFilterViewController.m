@@ -82,8 +82,7 @@ static NSString *CellID = @"city-table-cell";
     [self.navigationController.navigationBar setBarTintColor:[self.Utils.theme valueForKey:@"themeColor"]];
     self.navigationController.navigationBar.tintColor = [self.Utils.theme valueForKey:@"menuFontColor"];
     
-    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Cancel" style:UIBarButtonItemStylePlain target:self action:@selector(dismiss)];
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Done" style:UIBarButtonItemStylePlain target:self action:@selector(applySettings)];
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Cancel" style:UIBarButtonItemStylePlain target:self action:@selector(dismiss)];
 }
 
 /** **/
@@ -105,13 +104,18 @@ static NSString *CellID = @"city-table-cell";
     // date picker settings
     self.datePickerIsOpen = NO;
     
-    self.dateControl.tintColor = [self.Utils.theme valueForKey:@"themeColor"];
+    //self.dateControl.tintColor = [self.Utils.theme valueForKey:@"themeColor"];
+    //self.dateControl.backgroundColor = [self.Utils.theme valueForKey:@"themeColor"];
+    //self.dateControl.tintColor = [UIColor whiteColor];
     self.dateControlScroll.contentSize = CGSizeMake( self.dateControl.bounds.size.width + 40, 40 );
     
     [self.datePicker addTarget:self action:@selector(datePickerChanged:) forControlEvents:UIControlEventValueChanged];
     
     // update frames
     [self updateScroll];
+    
+    // date
+    [self setQueryStartTimeTo:[NSDate date]];
     
     // cityList
     CGRect ctframe = [self.cityList frame];
@@ -120,19 +124,18 @@ static NSString *CellID = @"city-table-cell";
     [self.cityList setFrame:ctframe];
     
     NSArray *cityArray = [NSArray arrayWithObjects:
-                   @{@"label" : @"New York City, NY, USA", @"City": @"New York", @"State":@"NY", @"Country":@"United States"},
-                   @{@"label" : @"Manhattan, NY, USA", @"City": @"Manhattan", @"State":@"NY", @"Country":@"United States"},
-                   @{@"label" : @"Brooklyn, NY, USA", @"City": @"Brooklyn", @"State":@"NY", @"Country":@"United States"},
-                   @{@"label" : @"Queens, NY, USA", @"City": @"Queens", @"State":@"NY", @"Country":@"United States"},
-                   @{@"label" : @"Bronx, NY, USA", @"City": @"Bronx", @"State":@"NY", @"Country":@"United States"},
-                   @{@"label" : @"Staten Island, NY, USA", @"City": @"Staten Island", @"State":@"NY", @"Country":@"United States"},
-                   @{@"label" : @"Miami, FL, USA", @"City": @"Miami", @"State":@"FL", @"Country":@"United States"},
-                   @{@"label" : @"Las Vegas, NV, USA", @"City": @"Las Vegas", @"State":@"NV", @"Country":@"United States"},
-                   @{@"label" : @"Los Angeles, CA, USA", @"City": @"Los Angeles", @"State":@"CA", @"Country":@"United States"},
-                   @{@"label" : @"San Francisco, CA, USA", @"City": @"San Francisco", @"State":@"CA", @"Country":@"United States"},
-                   @{@"label" : @"London, ENG, GB", @"City": @"London", @"State":@"ENG", @"Country":@"Great Britain"},
-                   @{@"label" : @"Paris, IDF, FR", @"City": @"Paris", @"State":@"IDF", @"Country":@"France"},
-                   @{@"label" : @"Sydney, NSW, AUS", @"City": @"Sydney", @"State":@"NSW", @"Country":@"Australia"},
+                   @{@"label" : @"New York City, NY, USA", @"City": @"New York", @"State":@"NY", @"Country":@"United States", @"lat" : @"40.774643100000000000", @"long" : @"-73.970196200000030000"},
+                   @{@"label" : @"Manhattan, NY, USA", @"City": @"Manhattan", @"State":@"NY", @"Country":@"United States" , @"lat" : @"40.774643100000000000", @"long" : @"-73.970196200000030000"},
+                   @{@"label" : @"Brooklyn, NY, USA", @"City": @"Brooklyn", @"State":@"NY", @"Country":@"United States", @"lat" : @"40.6602037", @"long" : @"-73.9689558"},
+                   @{@"label" : @"Miami, FL, USA", @"City": @"Miami", @"State":@"FL", @"Country":@"United States", @"lat" : @"25.771251300000000000", @"long" : @"-80.191872800000000000"},
+                   @{@"label" : @"Las Vegas, NV, USA", @"City": @"Las Vegas", @"State":@"NV", @"Country":@"United States", @"lat" : @"36.114646000000000000", @"long" : @"-115.172816000000010000"},
+                   @{@"label" : @"Los Angeles, CA, USA", @"City": @"Los Angeles", @"State":@"CA", @"Country":@"United States", @"lat" : @"34.052234200000000000", @"long" : @"-118.243684900000000000"},
+                   @{@"label" : @"San Francisco, CA, USA", @"City": @"San Francisco", @"State":@"CA", @"Country":@"United States", @"lat" : @"37.774929500000000000", @"long" : @"-122.419415500000010000"},
+                   @{@"label" : @"London, ENG, GB", @"City": @"London", @"State":@"ENG", @"Country":@"Great Britain", @"lat" : @"51.508129000000000000", @"long" : @"-0.128005000000030120"},
+                   @{@"label" : @"Paris, IDF, FR", @"City": @"Paris", @"State":@"IDF", @"Country":@"France", @"lat" : @"48.856614000000000000", @"long" : @"2.352221900000017700"},
+                   @{@"label" : @"Sydney, NSW, AUS", @"City": @"Sydney", @"State":@"NSW", @"Country":@"Australia", @"lat" : @"-33.873651000000000000", @"long" : @"151.206889600000070000"},
+                   @{@"label" : @"Hong Kong, TW, CH", @"City": @"Hong Kong", @"State":@"CH", @"Country":@"China", @"lat" : @"22.312968700000000000", @"long" : @"114.042110800000050000"},
+                   @{@"label" : @"Tokyo, TK, JP", @"City": @"Tokyo", @"State":@"TK", @"Country":@"Japan", @"lat" : @"35.689487500000000000", @"long" : @"-139.691706399999930000"},
                    nil];
     
     NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"label" ascending:YES];
@@ -150,10 +153,10 @@ static NSString *CellID = @"city-table-cell";
     [alphaGradientLayer setStartPoint:CGPointMake(0, 1)];
     [alphaGradientLayer setEndPoint:CGPointMake(0, 0.55)];
     [alphaGradientLayer setFrame:[self.cityList frame]];
-    [[self.cityListView layer] setMask:alphaGradientLayer];
+    //[[self.cityListView layer] setMask:alphaGradientLayer];
     
     // get previous city
-    NSDictionary *queryCity = [(EVETableViewController *) self.delegate queryCity];
+    NSMutableDictionary *queryCity = [(EVETableViewController *) self.delegate queryCity];
     
     if( queryCity )
     {
@@ -374,16 +377,9 @@ static NSString *CellID = @"city-table-cell";
 -( void )applySettings
 {
     [self setQueryKeyword];
-    NSMutableDictionary *config = [NSMutableDictionary new];
-    [config setValue:[self.city valueForKey:@"City"] forKey:@"city"];
-    [config setValue:[self.city valueForKey:@"State"] forKey:@"region"];
-    // @todo add startTime
-    [config setValue:self.keywordTextField.text forKey:@"keword"];
     
-    [(EVETableViewController *) self.delegate updateCollection:config];
-    [self dismissViewControllerAnimated:YES completion:^{
-        // update search query for EVETableViewController
-    }];
+    [(EVETableViewController *) self.delegate updateCollection];
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 /** **/
@@ -396,18 +392,16 @@ static NSString *CellID = @"city-table-cell";
 /** **/
 -( void ) setQueryStartTimeTo:( NSDate *) date
 {
-    [(EVETableViewController *) self.delegate setQueryTimestamp:[self.Utils dateToTimestamp:date]];
-    //NSLog(@"%@", [self.Utils dateToTimestamp:date]);
-    //NSLog(@"%@", date);
+    [(EVETableViewController *) self.delegate setQueryTimestamp:[self.Utils formatDate:date pattern:@"yyyyMMddHHmmss" ]];
 }
 
 /** **/
--( void ) setQueryCity:( NSDictionary *) city
+-( void ) setQueryCity:( NSMutableDictionary *) city
 {
-    self.city = [NSDictionary dictionaryWithDictionary:city];
+    self.city = [NSMutableDictionary dictionaryWithDictionary:city];
     [(EVETableViewController *) self.delegate setQueryCity:city];
     [self.cityLabel setText:[NSString stringWithFormat:@"%@", [city valueForKey:@"label"]]];
-    [self hideCityList];
+    //[self hideCityList];
 }
 
 /** **/
@@ -476,12 +470,15 @@ static NSString *CellID = @"city-table-cell";
         
         UIView *selectedBackgroundViewForCell = [UIView new];
         [selectedBackgroundViewForCell setBackgroundColor:[UIColor colorWithRed:0 green:0 blue:0 alpha:.05]];
+        //cell.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:.05];
+        cell.backgroundColor = nil;
         cell.selectedBackgroundView = selectedBackgroundViewForCell;
         cell.userInteractionEnabled = YES;
         
         NSString *label = [model valueForKey:@"label"] ? [model valueForKey:@"label"] : @"";
         [cell.textLabel setText:label];
-        [cell.textLabel setFont:[UIFont fontWithName:@"HelveticaNeue" size:14]];
+        [cell.textLabel setFont:[UIFont fontWithName:@"HelveticaNeue" size:16]];
+        [cell.textLabel setTextColor:[UIColor whiteColor]];
     }
     
     return cell;
@@ -490,7 +487,7 @@ static NSString *CellID = @"city-table-cell";
 // In a xib-based application, navigation from a table can be handled in -tableView:didSelectRowAtIndexPath:
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSDictionary *config = (NSDictionary *)[self.cities objectAtIndex:indexPath.row];
+    NSMutableDictionary *config = (NSMutableDictionary *)[self.cities objectAtIndex:indexPath.row];
     [self setQueryCity:config];
 }
 
@@ -499,7 +496,7 @@ static NSString *CellID = @"city-table-cell";
  **/
 -(CGFloat) tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 40.0;
+    return 60.0;
 }
 
 - (void)didReceiveMemoryWarning

@@ -18,6 +18,8 @@ static NSString *calendarTitle = @"Add to Calendar";
 #import "EVEUtils.h"
 #import <Social/Social.h>
 #import <EventKit/EventKit.h>
+#import "TPAppDelegate.h"
+#import "EVEUserViewController.h"
 
 @interface EVEDetailViewController () <MKMapViewDelegate, UIActionSheetDelegate, UIScrollViewDelegate>
 @property (nonatomic, strong) EVEAnnotation *annotation;
@@ -28,13 +30,9 @@ static NSString *calendarTitle = @"Add to Calendar";
 @property (nonatomic, weak) IBOutlet UILabel *nameLabel;
 @property (nonatomic, weak) IBOutlet UILabel *dateLabel;
 @property (nonatomic, weak) IBOutlet UILabel *descLabel;
-@property (nonatomic, weak) IBOutlet UILabel *cityLabel;
-@property (nonatomic, weak) IBOutlet UILabel *regionLabel;
-@property (nonatomic, weak) IBOutlet UILabel *countryLabel;
 @property (nonatomic, weak) IBOutlet UILabel *streetLabel;
 @property (nonatomic, weak) IBOutlet UILabel *tagsLabel;
 @property (nonatomic, weak) IBOutlet UILabel *admissionLabel;
-@property (nonatomic, weak) IBOutlet UILabel *currencyLabel;
 @property (nonatomic, weak) IBOutlet UILabel *userNameLabel;
 @property (nonatomic, weak) IBOutlet UILabel *distanceLabel;
 @property (nonatomic, weak) IBOutlet UILabel *ETALabel;
@@ -91,31 +89,35 @@ static NSString *calendarTitle = @"Add to Calendar";
 /** **/
 -( void ) applyConfig:( NSDictionary *) config
 {
-    self.id = [config valueForKey:@"self.id"];
-    self.userId = [config valueForKey:@"userId"];
+    self.id = [config valueForKey:@"id"] ? [config valueForKey:@"id"] : [config valueForKey:@"_id"];
     self.userName = [config valueForKey:@"userName"];
     self.name = [config valueForKey:@"name"];
     self.startTtime = [config valueForKey:@"startTime"];
     self.endTime = [config valueForKey:@"endTime"];
     self.url = [config valueForKey:@"url"];
-    self.created = [[config valueForKey:@"created"] intValue];
     self.admission = [config valueForKey:@"admission"];
-    self.currency = [config valueForKey:@"currency"];
     self.price = [[config valueForKey:@"price"] intValue];
-    self.description = [config valueForKey:@"description"];
     self.tags = [config valueForKey:@"tags"];
-    self.venue = [config valueForKey:@"venue"];
-    self.street = [config valueForKey:@"street"];
-    self.region = [config valueForKey:@"region"];
-    self.city = [config valueForKey:@"city"];
-    self.countryName = [config valueForKey:@"countryName"];
     self.address = [config valueForKey:@"address"];
     self.latitude = [[config valueForKey:@"latitude"] floatValue];
     self.longitude = [[config valueForKey:@"longitude"] floatValue];
-    self.tags = [config objectForKey:@"tags"];
+    self.description = [config valueForKey:@"short_description"];
+    
+    // set tags
+    @try {
+        self.tags = [config objectForKey:@"tags"];
+    }
+    @catch (NSException *exception) {
+        self.tags = [config valueForKey:@"tags"];
+    }
+    @finally {
+        nil;
+    }
+    
     self.ETAViewOn = YES;
     
     [self calculateDistanceAndETA];
+    
 }
 
 /** **/
@@ -130,36 +132,30 @@ static NSString *calendarTitle = @"Add to Calendar";
     self.nameLabel.text = self.name;
     self.descLabel.text = self.description;
     self.streetLabel.text = self.address;
-    self.cityLabel.text = [self.city uppercaseString];
-    self.regionLabel.text = [self.region uppercaseString];
-    self.countryLabel.text = [self.countryName uppercaseString];
     self.admissionLabel.text = self.price == 0 ? @"Free" : self.admission;
-    self.currencyLabel.text = self.currency;
     self.userNameLabel.text = self.userName;
     self.dateLabel.text = self.dateString;
-    self.tagsLabel.text = [[[NSArray arrayWithArray:self.tags] componentsJoinedByString:@", "] capitalizedString];
-    [self toggleETAadnDistanceLabels];
+    // set tags
+    @try {
+        self.tagsLabel.text = [[self.tags componentsJoinedByString:@", "] capitalizedString];
+    }
+    @catch (NSException *exception) {
+        self.tagsLabel.text = [[NSString stringWithFormat:@"%@", self.tags] capitalizedString ];
+    }
+    @finally {
+        nil;
+    }
     
     // navbar
     UIBarButtonItem *shareBarButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAction target:self action:@selector(initShare)];
     self.navigationItem.rightBarButtonItem = shareBarButton;
-//    
-//    UIImage *image = [UIImage imageNamed:@"left"];
-//    
-//    UIButton *backButton = [UIButton buttonWithType:UIButtonTypeCustom];
-//    [backButton setFrame:CGRectMake(0, 0, 32, 32)];
-//    [backButton setTintColor:[UIColor whiteColor]];
-//    [backButton addTarget:self action:@selector(dismiss) forControlEvents:UIControlEventTouchUpInside];
-//    [backButton setBackgroundImage:[image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate] forState:UIControlStateNormal];
-//    
-//    UIBarButtonItem *backButtonItem = [[UIBarButtonItem alloc] initWithCustomView:backButton];
-//    //self.navigationItem.leftBarButtonItem = backButtonItem;
     
     // mapView
     self.mapViewFrame = self.MapViewWrap.frame;
     
     // ticketButton
-    if( self.price == 0 ) [self.ticketButton setTitle:@"GET PASS" forState:UIControlStateNormal];
+    if( self.price == 0 ) [self.ticketButton setTitle:@"GET PASS FROM OUR PARTNERS" forState:UIControlStateNormal];
+    else [self.ticketButton setTitle:@"GET TICKETS FROM OUR PARTNERS" forState:UIControlStateNormal];
 }
 
 /** **/
@@ -173,6 +169,9 @@ static NSString *calendarTitle = @"Add to Calendar";
     
     UITapGestureRecognizer *descTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(initDetailDescription)];
     [self.descBox addGestureRecognizer:descTap];
+    
+    UITapGestureRecognizer *btnTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(initMaps)];
+    [self.imapButtonWrap addGestureRecognizer:btnTap];
 }
 
 /** **/
@@ -198,13 +197,26 @@ static NSString *calendarTitle = @"Add to Calendar";
 /** **/
 -( void ) initDetailDescription
 {
-    EVEDescriptionViewController *descViewController = [[EVEDescriptionViewController alloc] init];
-    descViewController.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
-    descViewController.body = self.description;
-    UINavigationController* navController = [[UINavigationController alloc] initWithRootViewController:descViewController];
-    [self presentViewController:navController animated:YES completion:^(void){
-        
-    }];
+    
+    NSString *feed = [[NSString alloc] initWithFormat:@"/api/item/%@", self.id];
+    
+    if( [self.Utils eveIsOnline] )
+    {
+        NSArray *match = [self.Utils getCollectionforFeed:feed];
+        if( match )
+        {
+            NSDictionary *item = ( NSDictionary *) match[0];
+            EVEDescriptionViewController *descViewController = [[EVEDescriptionViewController alloc] init];
+            descViewController.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
+            descViewController.html = [item valueForKey:@"html_description"];
+            UINavigationController* navController = [[UINavigationController alloc] initWithRootViewController:descViewController];
+            [self presentViewController:navController animated:YES completion:nil];
+        }
+    }
+    else
+    {
+        [self.Utils netWorkErrorHandler];
+    }
 }
 
 /** **/
@@ -219,20 +231,28 @@ static NSString *calendarTitle = @"Add to Calendar";
 /** **/
 -( void ) initTicketsViewWithTitle:(NSString *)title
 {
-    EVEWebViewController *webview = [[EVEWebViewController alloc] init];
-    webview.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
-    webview.title = title;
-    webview.url = self.url;
-    UINavigationController* navController = [[UINavigationController alloc] initWithRootViewController:webview];
-    [self presentViewController:navController animated:YES completion:^(void){
-        
-    }];
-    
+    if( [self.Utils eveIsOnline] )
+    {
+        EVEWebViewController *webview = [[EVEWebViewController alloc] init];
+        webview.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
+        webview.url = self.url;
+        UINavigationController* navController = [[UINavigationController alloc] initWithRootViewController:webview];
+        [self presentViewController:navController animated:YES completion:nil];
+    }
+    else
+    {
+        [self.Utils netWorkErrorHandler];
+    }
 }
 
 /** **/
 -( void ) initCalendar
 {
+    [self.calendarBar setAlpha:0];
+    [UIView animateWithDuration:1.5 delay:0.0 usingSpringWithDamping:.8 initialSpringVelocity:0.0 options:0 animations:^{
+        [self.calendarBar setAlpha:1];
+    } completion:nil];
+    
     NSString *imaps = calendarTitle;
     NSString *cancelTitle = @"Cancel";
     
@@ -247,8 +267,13 @@ static NSString *calendarTitle = @"Add to Calendar";
 }
 
 /** **/
--( void ) initMaps
+-( IBAction)initMaps
 {
+    [self.imapButton setAlpha:0];
+    [UIView animateWithDuration:1.5 delay:0.0 usingSpringWithDamping:.8 initialSpringVelocity:0.0 options:0 animations:^{
+        [self.imapButton setAlpha:1];
+    } completion:nil];
+    
     NSString *imaps = mapsButtonTitle;
     NSString *cancelTitle = @"Cancel";
     
@@ -261,6 +286,7 @@ static NSString *calendarTitle = @"Add to Calendar";
 
     [actionSheet showInView:self.view];
 }
+
 
 /** **/
 -( void ) saveToCalendar
@@ -280,11 +306,7 @@ static NSString *calendarTitle = @"Add to Calendar";
     
     if( eventExists )
     {
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Hmm... You like this one." message:@"This event is aleardy in your calendar." delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
-        
-        dispatch_after(1.0f, dispatch_get_main_queue(), ^(void){
-            [alert show];
-        });
+        [EVEUtils alert:@"Hmm... You like this one." message:@"This event is aleardy in your calendar." delegate:self];
     }
     else
     {
@@ -306,6 +328,31 @@ static NSString *calendarTitle = @"Add to Calendar";
         
             if( !err )
             {
+                // save to core data
+                TPAppDelegate *appDelegate = [[UIApplication sharedApplication] delegate];
+                NSManagedObjectContext *context = [appDelegate managedObjectContext];
+                NSManagedObject *eve = [NSEntityDescription insertNewObjectForEntityForName:@"Eve" inManagedObjectContext:context];
+                
+                NSNumber *price = [[NSNumber alloc] initWithInt:self.price];
+                
+                [eve setValue:self.id forKey:@"id"];
+                [eve setValue:self.name forKey:@"name"];
+                [eve setValue:self.startTtime forKey:@"startTime"];
+                [eve setValue:self.endTime forKey:@"endTime"];
+                [eve setValue:self.description forKey:@"short_description"];
+                [eve setValue:[self.tags componentsJoinedByString:@", "] forKey:@"tags"];
+                [eve setValue:price forKey:@"price"];
+                [eve setValue:self.price == 0 ? @"Free" : self.admission forKey:@"admission"];
+                [eve setValue:self.dateString forKey:@"dateString"];
+                [eve setValue:self.address forKey:@"address"];
+                [eve setValue:[NSString stringWithFormat:@"%f", self.latitude] forKey:@"latitude"];
+                [eve setValue:[NSString stringWithFormat:@"%f", self.longitude] forKey:@"longitude"];
+                [eve setValue:self.url forKey:@"url"];
+                [eve setValue:self.userName forKey:@"userName"];
+                // save model
+                if (![context save:&error]) NSLog(@"Whoops, couldn't save: %@", [error localizedDescription]);
+                
+                // set notification
                 UILocalNotification *localNotification = [[UILocalNotification alloc] init];
                 
                 // Set the fire date/time
@@ -323,10 +370,7 @@ static NSString *calendarTitle = @"Add to Calendar";
                 UIApplication *app = [UIApplication sharedApplication];
                 [app scheduleLocalNotification:localNotification];
                 
-                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Done!" message:@"Event added to calendar." delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
-                dispatch_after(1.0f, dispatch_get_main_queue(), ^(void){
-                    [alert show];
-                });
+                [EVEUtils alert:@"Done!" message:@"Event added to calendar." delegate:self];
             }
         }];
     }
@@ -335,7 +379,7 @@ static NSString *calendarTitle = @"Add to Calendar";
 /** **/
 -( void ) initShare
 {
-    NSString *status = [NSString stringWithFormat:@"%@, %@, %@, %@", self.name, self.startTtime, self.city, self.region];
+    NSString *status = [NSString stringWithFormat:@"%@, %@, %@", self.name, self.dateString, self.address];
     UIActivityViewController *activityController = [[UIActivityViewController alloc] initWithActivityItems:@[status] applicationActivities:nil];
     [self presentViewController:activityController animated:YES completion:nil];
 }
@@ -352,14 +396,12 @@ static NSString *calendarTitle = @"Add to Calendar";
     self.annotation =[[EVEAnnotation alloc] initWithTitle:self.startTtime subTitle:self.address location:location];
     [self.MapView addAnnotation: self.annotation];
     
-    self.imapButtonWrap.layer.cornerRadius = 5;
-    //self.imapButtonWrap.backgroundColor = [UIColor whiteColor];
-    [self.imapButton addTarget:self action:@selector(initMaps) forControlEvents:UIControlEventTouchUpInside];
+    self.imapButtonWrap.layer.cornerRadius = 4;
     
     UIImage *image = [UIImage imageNamed:@"852-map-selected"];
     
     [self.imapButton setBackgroundImage:[image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate] forState:UIControlStateNormal];
-    [self.imapButton setTintColor:[self.Utils.theme valueForKey:@"themeColor"]];
+    [self.imapButton setTintColor:[UIColor whiteColor]];
 }
 
 /** **/
@@ -404,7 +446,11 @@ static NSString *calendarTitle = @"Add to Calendar";
         rect.y = self.addressBar.frame.origin.y - self.addressBar.frame.size.height - 15;
         frame.size.height = self.view.frame.size.height - self.addressBar.frame.size.height - 64;
     
-        if( self.isMapExpanded == NO && self.route) [self expandMap:rect endFrame:frame];
+        if( self.isMapExpanded == NO )
+        {
+            if( self.route ) [self expandMap:rect endFrame:frame];
+            else [EVEUtils alert:@"Route unavailable." message:nil delegate:nil];
+        }
         else [self collapaseMap];
             
         [self.MapView deselectAnnotation:annotationView.annotation animated:YES];
@@ -437,7 +483,18 @@ static NSString *calendarTitle = @"Add to Calendar";
             [self.MapView setVisibleMapRect:zoomRect edgePadding:UIEdgeInsetsMake( 40, 40, 40, 40 ) animated:YES];
         }];
     }
+}
 
+/** **/
+-(void) touchesBegan:(NSSet*) touches withEvent:(UIEvent *) event {
+    
+    CGPoint point = [[touches anyObject] locationInView:self.view];
+    
+    if([self.imapButtonWrap.layer.presentationLayer hitTest:point]) {
+        
+        //do something
+        return;
+    }
 }
 
 /** **/
@@ -465,6 +522,11 @@ static NSString *calendarTitle = @"Add to Calendar";
 /** **/
 -( void ) toggleETAadnDistanceLabels
 {
+    [self.addressBar setAlpha:0];
+    [UIView animateWithDuration:1.5 delay:0.0 usingSpringWithDamping:.8 initialSpringVelocity:0.0 options:0 animations:^{
+        [self.addressBar setAlpha:1];
+    } completion:nil];
+    
     if( self.ETAViewOn )
     {
         self.ETAViewOn = NO;
