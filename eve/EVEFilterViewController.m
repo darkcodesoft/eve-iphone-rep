@@ -75,7 +75,7 @@ static NSString *CellID = @"city-table-cell";
 {
     self.Utils = [EVEUtils new];
     // Do any additional setup after loading the view from its nib.
-    self.title = @"Settings";
+    self.title = @"Search";
     
     [self.navigationController.navigationBar setTranslucent:YES];
     self.navigationController.navigationBar.barStyle = UIBarStyleBlackTranslucent;
@@ -92,6 +92,7 @@ static NSString *CellID = @"city-table-cell";
     
     // keyword
     [self.keywordTextField setDelegate:self];
+    [self.keywordTextField becomeFirstResponder];
     
     // submit button
     self.submitButton.layer.cornerRadius = 5;
@@ -332,6 +333,8 @@ static NSString *CellID = @"city-table-cell";
     
     cityListViewFrame.size.height = cityListViewHeight;
     submitButtonFrame.origin.y += cityListViewHeight;
+    
+    [self.keywordTextField resignFirstResponder];
     
     [UIView animateWithDuration:.8 delay:0.0 usingSpringWithDamping:.8 initialSpringVelocity:0.0 options:0 animations:^{
         //Animations

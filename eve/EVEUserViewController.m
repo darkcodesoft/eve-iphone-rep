@@ -6,16 +6,19 @@
 //  Copyright (c) 2014 tdp. All rights reserved.
 //
 
+const float filterViewHeight = 0;
+
 #import "EVEUserViewController.h"
 #import "EVEUtils.h"
 #import "TPAppDelegate.h"
 #import "EVECell.h"
 #import "EVEDetailViewController.h"
+#import "EVEFilterUITextField.h"
 #import <EventKit/EventKit.h>
 
 static NSString *CellID = @"list-table-cell";
 
-@interface EVEUserViewController () <UITableViewDelegate, UITableViewDataSource>
+@interface EVEUserViewController () <UITextFieldDelegate, UITableViewDelegate, UITableViewDataSource>
 @property (nonatomic, strong) EVEUtils *Utils;
 @property ( nonatomic, strong ) UIView *titleView;
 @property ( nonatomic, strong ) UILabel *header;
@@ -25,6 +28,14 @@ static NSString *CellID = @"list-table-cell";
 @property (nonatomic, strong) NSManagedObjectContext *context;
 @property (nonatomic, strong) UITableView *TableView;
 @property (nonatomic, strong) EKEventStore *eventStore;
+@property (nonatomic, weak) IBOutlet UIView *filterView;
+@property (nonatomic, weak) IBOutlet EVEFilterUITextField *searchTextField;
+@property (nonatomic, weak) IBOutlet UITableView *resultList;
+@property (nonatomic, strong) NSArray *collection;
+
+@property (nonatomic, strong) NSTimer *timer;
+
+@property (nonatomic) BOOL filterOpen;
 @end
 
 @implementation EVEUserViewController
@@ -45,7 +56,11 @@ static NSString *CellID = @"list-table-cell";
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     [self initConfig];
+    [self drawFilter];
     [self retrieveModels];
+    
+    // init listeners
+    [self initListeners];
 }
 
 /** **/
@@ -55,7 +70,7 @@ static NSString *CellID = @"list-table-cell";
     
     self.navigationItem.title = @"Calendar";
     
-    UIBarButtonItem *filterButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemSearch target:self action:nil];
+    UIBarButtonItem *filterButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemSearch target:self action:@selector(toggleFilter)];
     self.navigationItem.rightBarButtonItem = filterButton;
     
     // title
@@ -102,14 +117,22 @@ static NSString *CellID = @"list-table-cell";
 }
 
 /** **/
+-( void ) initListeners
+{
+    // cityView listner
+    UITapGestureRecognizer *titleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(toggleFilter)];
+    [self.titleView addGestureRecognizer:titleTap];
+}
+
+/** **/
 -( void ) removeCalendarItem:(NSIndexPath *)path
 {
     NSManagedObject *model = [self.calendarItems objectAtIndex:path.row];
     NSArray *keys = [[[model entity] attributesByName] allKeys];
     NSDictionary *mod = [model dictionaryWithValuesForKeys:keys];
     
-    [self.TableView beginUpdates];
-    [self.TableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:path] withRowAnimation:UITableViewRowAnimationFade];
+    [self.calendarList beginUpdates];
+    [self.calendarList deleteRowsAtIndexPaths:[NSArray arrayWithObject:path] withRowAnimation:UITableViewRowAnimationFade];
     [self retrieveModels];
     [(NSMutableArray *)self.calendarItems removeObjectAtIndex:path.row];
    
@@ -132,7 +155,7 @@ static NSString *CellID = @"list-table-cell";
          }
      }];
     
-    [self.TableView endUpdates];
+    [self.calendarList endUpdates];
 }
 
 // Override to support editing the table view.
@@ -177,7 +200,11 @@ static NSString *CellID = @"list-table-cell";
     NSMutableArray *objects = [(NSMutableArray *)[self.context executeFetchRequest:request error:&error] mutableCopy];
     
     if ([objects count] == 0) NSLog(@"No matches");
-    else self.calendarItems = objects;
+    else
+    {
+        self.calendarItems = objects;
+        self.collection = objects;
+    }
 }
 
 /** **/
@@ -195,7 +222,7 @@ static NSString *CellID = @"list-table-cell";
 /** **/
 -( void ) viewDidAppear:(BOOL)animated
 {
-    [self calendarListRefresh];
+    //[self calendarListRefresh];
 }
 
 /**
@@ -210,7 +237,7 @@ static NSString *CellID = @"list-table-cell";
     
     if( cell == nil ) cell = (EVECell *)[tableView dequeueReusableCellWithIdentifier:CellID];
     
-    NSDictionary *model = (NSDictionary *)[self.calendarItems objectAtIndex:indexPath.row];
+    NSDictionary *model = (NSDictionary *)[self.collection objectAtIndex:indexPath.row];
     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     
     UIView *selectedBackgroundViewForCell = [UIView new];
@@ -223,8 +250,13 @@ static NSString *CellID = @"list-table-cell";
     [cell.tagsLabel setText:[model valueForKey:@"tags"]];
     [cell.timeLabel setText:[[model valueForKey:@"dateString"] uppercaseString]];
     [cell.distanceLabel setText:[[model valueForKey:@"admission"] uppercaseString]];
-
-    return cell;
+    
+    if( tableView == self.calendarList )
+    {
+        return cell;
+    }
+    
+    else return cell;
 }
 
 /**
@@ -247,13 +279,13 @@ static NSString *CellID = @"list-table-cell";
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     // Return the number of rows in the section.
-    return [self.calendarItems count];
+    return [self.collection count];
 }
 
 /** **/
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSDictionary *model = (NSDictionary *)[self.calendarItems objectAtIndex:indexPath.row];
+    NSDictionary *model = (NSDictionary *)[self.collection objectAtIndex:indexPath.row];
     
     EVEDetailViewController *itemViewController = [[EVEDetailViewController alloc] init];
     [itemViewController applyConfig:model];
@@ -316,6 +348,150 @@ static NSString *CellID = @"list-table-cell";
         NSError *error = nil;
         if (![self.context save:&error]) NSLog(@"Whoops, couldn't save: %@", [error localizedDescription]);
     }
+}
+
+/** **/
+- (BOOL)textFieldShouldReturn:(UITextField *)textField {
+    [self toggleFilter];
+    [textField resignFirstResponder];
+    return YES;
+}
+
+
+/** **/
+- (BOOL)textFieldShouldEndEditing:(UITextField *)textField
+{
+    return YES;
+}
+
+-(IBAction)textFieldDidChange:(id)sender
+{
+    if( sender == self.searchTextField )
+    {
+        [self.timer invalidate];
+        
+        if( self.searchTextField.text.length > 2 )
+        {
+            self. timer = [NSTimer scheduledTimerWithTimeInterval:0.0
+                                             target:self
+                                           selector:@selector(initFilter)
+                                           userInfo:nil
+                                            repeats:NO];
+        }
+    }
+}
+
+/** **/
+-( void )initFilter
+{
+    NSString *keyword = self.searchTextField.text;
+    NSPredicate *npredicate = [NSPredicate predicateWithFormat:@"SELF.name contains[c] %@", keyword];
+    NSPredicate *dpredicate = [NSPredicate predicateWithFormat:@"SELF.short_description contains[c] %@", keyword];
+    NSPredicate *apredicate = [NSPredicate predicateWithFormat:@"SELF.address contains[c] %@", keyword];
+    NSPredicate *adpredicate = [NSPredicate predicateWithFormat:@"SELF.admission contains[c] %@", keyword];
+    NSPredicate *dapredicate = [NSPredicate predicateWithFormat:@"SELF.dateString contains[c] %@", keyword];
+    NSPredicate *tapredicate = [NSPredicate predicateWithFormat:@"SELF.tags contains[c] %@", keyword];
+    
+    NSCompoundPredicate *predicate = (NSCompoundPredicate *)[NSCompoundPredicate orPredicateWithSubpredicates:[NSArray arrayWithObjects:npredicate,dpredicate,apredicate,adpredicate,dapredicate,tapredicate, nil]];
+    
+    NSArray *objects = [self.calendarItems filteredArrayUsingPredicate:predicate];
+ 
+    if ( [objects count] == 0 )
+    {
+         NSLog( @"No matches" );
+        self.collection = self.calendarItems;
+    }
+    else
+    {
+        self.collection = [NSMutableArray arrayWithArray:objects];
+        CGRect frame = [self.filterView frame];
+        frame.origin.y = filterViewHeight;
+        
+        [self.filterView setFrame:frame];
+        [self.calendarList setFrame:CGRectMake(0, 66, self.calendarList.frame.size.width, self.calendarList.frame.size.height)];
+        
+        int64_t delayInSeconds = 0.1f;
+        dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);
+        
+        dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+            [self.calendarList reloadData];
+            [self hideFilter];
+        });
+    }
+}
+
+/** **/
+-( void ) toggleFilter
+{
+    if( self.filterOpen ) [self hideFilter];
+    else [self showFilter];
+}
+
+/** **/
+-( void ) titleViewToggleFilter
+{
+    [self.titleView setAlpha:0.1];
+    [UIView animateWithDuration:1.5 delay:0.0 usingSpringWithDamping:.8 initialSpringVelocity:0.0 options:0 animations:^{
+        //Animations
+        [self.titleView setAlpha:1.0];
+    } completion:^(BOOL finished) {
+        //Completion Block
+    }];
+    [self toggleFilter];
+}
+
+/** **/
+-( void ) drawFilter
+{
+    self.filterOpen = NO;
+    [self.filterView setHidden:YES];
+}
+
+/** **/
+-( void ) hideFilter
+{
+    self.filterOpen = NO;
+    CGRect frame = [self.filterView frame];
+    
+    frame.origin.y = - self.filterView.frame.size.height + filterViewHeight;
+    
+    [UIView animateWithDuration:.8 delay:0.0 usingSpringWithDamping:.8 initialSpringVelocity:0.0 options:0 animations:^{
+        //Animations
+        [self.filterView setFrame:frame];
+        [self.searchTextField resignFirstResponder];
+        [self.calendarList setFrame:CGRectMake(0, 0, self.calendarList.frame.size.width, self.calendarList.frame.size.height)];
+    } completion:^(BOOL finished){
+       
+        if( self.searchTextField.text.length == 0 )
+        {
+            self.collection = self.calendarItems;
+            
+            int64_t delayInSeconds = 0.1f;
+            dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);
+            
+            dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+                [self.calendarList reloadData];
+            });
+        }
+    }];
+}
+
+/** **/
+-( void ) showFilter
+{
+    self.filterOpen = YES;
+    CGRect frame = [self.filterView frame];
+    
+    frame.origin.y = filterViewHeight;
+    [self.filterView setHidden:NO];
+    
+    [UIView animateWithDuration:.8 delay:0.0 usingSpringWithDamping:.8 initialSpringVelocity:0.0 options:0 animations:^{
+        //Animations
+        [self.filterView setFrame:frame];
+        [self.calendarList setFrame:CGRectMake(0, 66, self.calendarList.frame.size.width, self.calendarList.frame.size.height)];
+    } completion:^(BOOL finished){
+        [self.searchTextField becomeFirstResponder];
+    }];
 }
 
 @end

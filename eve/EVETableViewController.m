@@ -462,11 +462,19 @@ static NSString *CellID = @"list-table-cell";
 // In a xib-based application, navigation from a table can be handled in -tableView:didSelectRowAtIndexPath:
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSDictionary *attributes = (NSDictionary *)[self.collection objectAtIndex:indexPath.row];
-    EVEDetailViewController *itemViewController = [[EVEDetailViewController alloc] init];
-    [itemViewController applyConfig:attributes];
-    itemViewController.hidesBottomBarWhenPushed = YES;
-    [self.navigationController pushViewController:itemViewController animated:YES];
+    @try {
+        NSDictionary *attributes = (NSDictionary *)[self.collection objectAtIndex:indexPath.row];
+        EVEDetailViewController *itemViewController = [[EVEDetailViewController alloc] init];
+        [itemViewController applyConfig:attributes];
+        itemViewController.hidesBottomBarWhenPushed = YES;
+        [self.navigationController pushViewController:itemViewController animated:YES];
+    }
+    @catch (NSException *exception) {
+        [EVEUtils alert:@"Oops... Could not load event." message:nil delegate:self];
+    }
+    @finally {
+        nil;
+    }
 }
 
 // this delegate is called when the app successfully finds your current location
